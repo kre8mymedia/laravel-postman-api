@@ -15,7 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Return Dashboard Route
-Route::get('/dashboard', function () {
+// // Return Dashboard Route
+// Route::get('/dashboard', function () {
+//     return view('pages.dashboard');
+// });
+
+Route::get('/{any}', function () {
     return view('pages.dashboard');
-});
+})->where('any','.*');

@@ -37723,7 +37723,7 @@ var render = function() {
                 [
                   _c(
                     "router-link",
-                    { staticClass: "nav-link", attrs: { to: "/dashboard" } },
+                    { staticClass: "nav-link", attrs: { to: "/example" } },
                     [
                       _vm._v("Home "),
                       _c("span", { staticClass: "sr-only" }, [
