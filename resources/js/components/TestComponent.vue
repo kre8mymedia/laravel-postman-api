@@ -23,10 +23,11 @@
                 </li>
             </ul>
         </nav>
-        <div class="card card-body" v-for="ticket in tickets" v-bind:key="ticket.id">
+        <div class="card card-body mb-2" v-for="ticket in tickets" v-bind:key="ticket.id">
             <h3>{{ ticket.title }}</h3>
             <p>{{ ticket.body }}</p>
             <hr>
+            <button @click="editTicket(ticket)" class="btn btn-warning mb-2">Edit</button>
             <button @click="deleteTicket(ticket.id)" class="btn btn-danger">Delete</button>
         </div>
     </div>
@@ -110,15 +111,31 @@
                     })
                     .catch(err =>console.log(err));
                 } else {
-                    
+                    // Update
+                    fetch('api/ticket', {
+                        method: 'put',
+                        body: JSON.stringify(this.ticket),
+                        headers: {
+                            'content-type': 'application/json'
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        this.ticket.title = '';
+                        this.ticket.body = '';
+                        alert('Ticket Updated');
+                        this.fetchTickets();
+                    })
+                    .catch(err =>console.log(err));
                 }
             },
 
             editTicket(ticket) {
                 this.edit = true;
-                this.ticket = ticket.id;
+                this.ticket.id = ticket.id;
                 this.ticket.ticket_id = ticket.id;
-                this.ticket.ticket
+                this.ticket.title = ticket.title;
+                this.ticket.body = ticket.body;
             }
         },
 

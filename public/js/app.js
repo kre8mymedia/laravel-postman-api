@@ -1942,6 +1942,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2023,13 +2024,33 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (err) {
           return console.log(err);
         });
-      } else {}
+      } else {
+        // Update
+        fetch('api/ticket', {
+          method: 'put',
+          body: JSON.stringify(this.ticket),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          _this3.ticket.title = '';
+          _this3.ticket.body = '';
+          alert('Ticket Updated');
+
+          _this3.fetchTickets();
+        })["catch"](function (err) {
+          return console.log(err);
+        });
+      }
     },
     editTicket: function editTicket(ticket) {
       this.edit = true;
-      this.ticket = ticket.id;
+      this.ticket.id = ticket.id;
       this.ticket.ticket_id = ticket.id;
-      this.ticket.ticket;
+      this.ticket.title = ticket.title;
+      this.ticket.body = ticket.body;
     }
   },
   mounted: function mounted() {
@@ -37572,26 +37593,43 @@ var render = function() {
       ]),
       _vm._v(" "),
       _vm._l(_vm.tickets, function(ticket) {
-        return _c("div", { key: ticket.id, staticClass: "card card-body" }, [
-          _c("h3", [_vm._v(_vm._s(ticket.title))]),
-          _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(ticket.body))]),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-danger",
-              on: {
-                click: function($event) {
-                  return _vm.deleteTicket(ticket.id)
+        return _c(
+          "div",
+          { key: ticket.id, staticClass: "card card-body mb-2" },
+          [
+            _c("h3", [_vm._v(_vm._s(ticket.title))]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(ticket.body))]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning mb-2",
+                on: {
+                  click: function($event) {
+                    return _vm.editTicket(ticket)
+                  }
                 }
-              }
-            },
-            [_vm._v("Delete")]
-          )
-        ])
+              },
+              [_vm._v("Edit")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                on: {
+                  click: function($event) {
+                    return _vm.deleteTicket(ticket.id)
+                  }
+                }
+              },
+              [_vm._v("Delete")]
+            )
+          ]
+        )
       })
     ],
     2
