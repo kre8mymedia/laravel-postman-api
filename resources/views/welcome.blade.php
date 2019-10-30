@@ -89,7 +89,7 @@
           <li><a href="#footer">Contact Us</a></li>
           <li class="drop-down"><a href="">Login</a>
             <ul>
-              <li><a href="#">Login</a></li>
+              <li><a href="/dashboard">Login</a></li>
               <li class="drop-down"><a href="#">Register</a>
                 <ul>
                   <li><a href="#">Dashboard</a></li>
@@ -97,7 +97,7 @@
               </li>
             </ul>
           </li>
-      
+
     </div>
   </header><!-- #header -->
 
