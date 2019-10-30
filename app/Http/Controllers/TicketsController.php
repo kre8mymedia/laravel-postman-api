@@ -17,7 +17,7 @@ class TicketsController extends Controller
     public function index()
     {
         // Get Tickets
-        $tickets = Ticket::orderBy('created_at', 'DESC')->paginate(2);
+        $tickets = Ticket::orderBy('created_at', 'DESC')->paginate(3);
         // Return tickets as collection
         return TicketResource::collection($tickets);
     }
