@@ -1848,11 +1848,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+// import Home from './views/Home';
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'app',
   components: {
+    // Home,
     ExampleComponent: _components_ExampleComponent__WEBPACK_IMPORTED_MODULE_0__["default"],
     TestComponent: _components_TestComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -1911,17 +1914,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      tickets: [],
+      ticket: {
+        id: '',
+        title: '',
+        body: ''
+      },
+      ticket_id: '',
+      pagination: {},
+      edit: false
+    };
+  },
+  created: function created() {
+    this.fetchTickets();
+  },
+  methods: {
+    fetchTickets: function fetchTickets() {
+      fetch('/api/tickets').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        console.log(res.data);
+      });
+    }
+  },
   mounted: function mounted() {
     console.log('Test Component mounted.');
   }
@@ -37239,6 +37257,8 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
+      _c("router-link", { attrs: { to: "/dashboard" } }, [_vm._v("Home")]),
+      _vm._v(" "),
       _c("router-link", { attrs: { to: "/example" } }, [_vm._v("Example")]),
       _vm._v(" "),
       _c("router-link", { attrs: { to: "/test" } }, [_vm._v("Test")]),
@@ -37325,21 +37345,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("TEST Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an TEST component.\n                "
-              )
-            ])
-          ])
-        ])
-      ])
+      _c("h2", [_vm._v("Test Component")])
     ])
   }
 ]
@@ -52461,11 +52467,14 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 window.VueRouter = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js")["default"];
 Vue.config.productionTip = false;
-Vue.use(VueRouter);
+Vue.use(VueRouter); // const Home = Vue.component('Home', require('./views/Home.vue').default);
+
 var TestComponent = Vue.component('Test', __webpack_require__(/*! ./components/TestComponent.vue */ "./resources/js/components/TestComponent.vue")["default"]);
 var ExampleComponent = Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 var App = Vue.component('App', __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue")["default"]);
 var routes = [{
+  path: '/dashboard'
+}, {
   path: '/example',
   component: ExampleComponent
 }, {

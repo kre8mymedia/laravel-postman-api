@@ -7,11 +7,13 @@ Vue.config.productionTip = false
 
 Vue.use(VueRouter);
 
+// const Home = Vue.component('Home', require('./views/Home.vue').default);
 const TestComponent = Vue.component('Test', require('./components/TestComponent.vue').default);
 const ExampleComponent = Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 const App = Vue.component('App', require('./App.vue').default);
 
 const routes = [
+    { path: '/dashboard' },
     { path: '/example', component: ExampleComponent },
     { path: '/test', component: TestComponent },
 ]

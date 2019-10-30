@@ -1,21 +1,39 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">TEST Component</div>
-
-                    <div class="card-body">
-                        I'm an TEST component.
-                    </div>
-                </div>
-            </div>
-        </div>
+        <h2>Test Component</h2>
     </div>
 </template>
 
 <script>
     export default {
+        data() {
+            return {
+                tickets: [],
+                ticket: {
+                    id: '',
+                    title: '',
+                    body: ''
+                },
+                ticket_id: '',
+                pagination: {},
+                edit: false
+            }
+        },
+
+        created() {
+            this.fetchTickets();
+        },
+
+        methods: {
+            fetchTickets() {
+                fetch('/api/tickets')
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res.data);
+                })
+            }
+        },
+
         mounted() {
             console.log('Test Component mounted.')
         }

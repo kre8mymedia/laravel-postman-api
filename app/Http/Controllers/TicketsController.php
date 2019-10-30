@@ -17,19 +17,9 @@ class TicketsController extends Controller
     public function index()
     {
         // Get Tickets
-        $tickets = Ticket::paginate(2);
+        $tickets = Ticket::orderBy('created_at', 'DESC')->paginate(2);
         // Return tickets as collection
         return TicketResource::collection($tickets);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -65,29 +55,6 @@ class TicketsController extends Controller
 
         //Return single tcket as a reseource
         return new TicketResource($ticket);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**

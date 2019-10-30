@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="76x76" href={{ asset("assets/img/apple-icon.png") }}>
-    <link rel="icon" type="image/png" sizes="96x96" href={{ asset("assets/img/favicon.png") }}>
+    {{-- <link rel="icon" type="image/png" sizes="96x96" href={{ asset("assets/img/favicon.png") }}> --}}
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
