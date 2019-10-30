@@ -1,8 +1,6 @@
 <template>
-    <div class="container">
-      <router-link to="/dashboard">Home</router-link>
-      <router-link to="/example">Example</router-link>
-      <router-link to="/test">Test</router-link>
+    <div>
+      <Navbar />
       <router-view />
     </div>
 </template>
@@ -11,11 +9,13 @@
   // import Home from './views/Home';
   import ExampleComponent from './components/ExampleComponent';
   import TestComponent from './components/TestComponent';
+  import Navbar from './components/layout/Navbar';
 
   export default {
     name: 'app',
     components: {
       // Home,
+      Navbar,
       ExampleComponent,
       TestComponent
     },

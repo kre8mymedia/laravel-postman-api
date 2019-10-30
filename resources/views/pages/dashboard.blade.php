@@ -3,7 +3,7 @@
 @section('content')
 
   <div id="app">
-   <App></App>
+    <App></App>
   </div>
 
 @endsection

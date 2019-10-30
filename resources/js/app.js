@@ -10,6 +10,7 @@ Vue.use(VueRouter);
 // const Home = Vue.component('Home', require('./views/Home.vue').default);
 const TestComponent = Vue.component('Test', require('./components/TestComponent.vue').default);
 const ExampleComponent = Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('Navbar', require('./components/layout/Navbar.vue').default);
 const App = Vue.component('App', require('./App.vue').default);
 
 const routes = [
@@ -26,6 +27,6 @@ const router = new VueRouter({
 new Vue({
     router,
     render: h => h(
-        App
+        App,
     )
 }).$mount('#app')
