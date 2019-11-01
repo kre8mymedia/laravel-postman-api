@@ -27,3 +27,14 @@ Route::post('ticket', 'TicketsController@store');
 Route::put('ticket', 'TicketsController@store');
 // DELETE Ticket
 Route::delete('ticket/{id}', 'TicketsController@destroy');
+
+// LIST Users
+Route::get('users', 'UsersController@index');
+// SINGLE User
+Route::get('user/{id}', 'UsersController@show');
+// CREATE User
+Route::post('user', 'UsersController@store');
+// UPDATE User
+Route::put('user', 'UsersController@store');
+// DELETE User
+Route::delete('user/{id}', 'UsersController@destroy');

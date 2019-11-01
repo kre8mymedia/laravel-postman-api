@@ -6,18 +6,20 @@
 </template>
 
 <script>
-  // import Home from './views/Home';
+  import Home from './views/Home';
   import ExampleComponent from './components/ExampleComponent';
-  import TestComponent from './components/TestComponent';
   import Navbar from './components/layout/Navbar';
+  import Tickets from './components/Tickets';
+  import Users from './components/Users';
 
   export default {
     name: 'app',
     components: {
-      // Home,
+      Home,
       Navbar,
       ExampleComponent,
-      TestComponent
+      Tickets,
+      Users
     },
 
     mounted() {
