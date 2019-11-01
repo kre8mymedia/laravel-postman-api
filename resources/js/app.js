@@ -8,7 +8,7 @@ Vue.config.productionTip = false
 Vue.use(VueRouter);
 
 const Home = Vue.component('Home', require('./views/Home.vue').default);
-const Tickets = Vue.component('Test', require('./components/Tickets.vue').default);
+const Tickets = Vue.component('Ticket', require('./components/Tickets.vue').default);
 const ExampleComponent = Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('Navbar', require('./components/layout/Navbar.vue').default);
 const App = Vue.component('App', require('./App.vue').default);

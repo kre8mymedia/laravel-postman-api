@@ -53402,7 +53402,7 @@ window.VueRouter = __webpack_require__(/*! vue-router */ "./node_modules/vue-rou
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
 var Home = Vue.component('Home', __webpack_require__(/*! ./views/Home.vue */ "./resources/js/views/Home.vue")["default"]);
-var Tickets = Vue.component('Test', __webpack_require__(/*! ./components/Tickets.vue */ "./resources/js/components/Tickets.vue")["default"]);
+var Tickets = Vue.component('Ticket', __webpack_require__(/*! ./components/Tickets.vue */ "./resources/js/components/Tickets.vue")["default"]);
 var ExampleComponent = Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('Navbar', __webpack_require__(/*! ./components/layout/Navbar.vue */ "./resources/js/components/layout/Navbar.vue")["default"]);
 var App = Vue.component('App', __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue")["default"]);
