@@ -40,6 +40,21 @@ class DatabaseSeeder extends Seeder
         $x->title = 'I have this problem from NEIGHBOR';
         $x->body = 'This is the logng form description of problem Im having ME TOO help';
         $x->save();
+
+        $x = new App\Role;
+        $x->user_id = 2;
+        $x->name = 'Manager';
+        $x->save();
+
+        $x = new App\Role;
+        $x->user_id = 1;
+        $x->name = 'Owner';
+        $x->save();
+
+        $x = new App\Role;
+        $x->user_id = 3;
+        $x->name = 'Tenant';
+        $x->save();
         
     }
 }

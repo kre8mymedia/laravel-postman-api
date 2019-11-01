@@ -11,6 +11,7 @@
   import Navbar from './components/layout/Navbar';
   import Tickets from './components/Tickets';
   import Users from './components/Users';
+  import Roles from './components/Roles';
 
   export default {
     name: 'app',
@@ -19,7 +20,8 @@
       Navbar,
       ExampleComponent,
       Tickets,
-      Users
+      Users,
+      Roles
     },
 
     mounted() {

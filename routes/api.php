@@ -38,3 +38,14 @@ Route::post('user', 'UsersController@store');
 Route::put('user', 'UsersController@store');
 // DELETE User
 Route::delete('user/{id}', 'UsersController@destroy');
+
+// LIST Roles
+Route::get('roles', 'RolesController@index');
+// SINGLE Role
+Route::get('role/{id}', 'RolesController@show');
+// CREATE Role
+Route::post('role', 'RolesController@store');
+// UPDATE Role
+Route::put('role', 'RolesController@store');
+// DELETE Role
+Route::delete('role/{id}', 'RolesController@destroy');

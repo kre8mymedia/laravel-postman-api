@@ -55,7 +55,7 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
 
         //Return single tcket as a reseource
-        return new User($user);
+        return new UserResource($user);
     }
 
     /**

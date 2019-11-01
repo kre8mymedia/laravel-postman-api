@@ -13,12 +13,14 @@ const ExampleComponent = Vue.component('example-component', require('./component
 Vue.component('Navbar', require('./components/layout/Navbar.vue').default);
 const App = Vue.component('App', require('./App.vue').default);
 const Users = Vue.component('User', require('./components/Users.vue').default);
+const Roles = Vue.component('Role', require('./components/Roles.vue').default);
 
 const routes = [
     { path: '/home', component: Home },
     { path: '/example', component: ExampleComponent },
     { path: '/tickets', component: Tickets },
     { path: '/users', component: Users },
+    { path: '/roles', component: Roles },
 ]
 
 const router = new VueRouter({

@@ -11,7 +11,7 @@
 			<div class="form-group">
                 <input type="text" class="form-control" placeholder="Password" v-model="user.password">
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Save</button>
+            <button type="submit" class="btn btn-light btn-block">Save</button>
         </form>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
@@ -41,7 +41,7 @@
     export default {
         data() {
             return {
-                user: [],
+                users: [],
                 user: {
                     id: '',
                     name: '',
