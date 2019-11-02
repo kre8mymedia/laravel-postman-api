@@ -16,9 +16,18 @@
                 <label for="exampleFormControlSelect1">Select User</label>
                 <select v-model="role.user_id" class="form-control" id="exampleFormControlSelect1">
                     <option disabled value="">Please select one</option>
-                    <option v-for="user in users" v-bind:key="user.id">{{user.id}}</option>
+                    <option v-for="user in users" :key="user.id" :value="user.id" >
+                        {{user.name}}
+                    </option>
                 </select>
             </div>
+
+            <!-- <div class="form-group">
+                <label for="role_user_id">Select User</label>
+                <select id="role_user_id" class="form-control" v-model="role.user_id">
+                    <option v-for="user in users" v-bind:key="user.id">{{user.name}}</option>
+                </select>
+            </div> -->
 
 
             <button type="submit" class="btn btn-light btn-block">Save</button>
@@ -54,26 +63,30 @@
 </template>
 
 <script>
+    import User from './Users.vue';
     export default {
         data() {
             return {
-                roles: [],
                 role: {
                     id: '',
                     user_id: '',
                     name: '',
                 },
-                users: [],
                 user: {
                     id: '',
                     name: '',
                     email: '',
-                    password: '',
                 },
+                roles: [],
+                users: [],
                 role_id: '',
                 pagination: {},
                 edit: false,
             }
+        },
+
+        components: {
+            User,
         },
 
         created() {
@@ -88,8 +101,11 @@
                 fetch(page_url)
                 .then(res => res.json())
                 .then(res => {
+                    // Roles log to console
                     console.log(res.data);
+                    // this fetches role data
                     this.roles = res.data;
+                    // Get this vue's structure pagination?
                     vm.makePagination(res.meta, res.links);
                 })
                 .catch(err => console.log(err));
@@ -101,11 +117,18 @@
                 fetch(page_url)
                 .then(res => res.json())
                 .then(res => {
+                    // Users log to console
                     console.log(res.data);
+                    // this fetches user data
                     this.users = res.data;
+                    // Get this vue's structure pagination?
                     vm.makePagination(res.meta, res.links);
                 })
                 .catch(err => console.log(err));
+            },
+
+            getUsers() {
+                console.log(this.users);
             },
 
             makePagination(meta, links) {
@@ -163,7 +186,7 @@
                     .then(res => res.json())
                     .then(data => {
                         this.role.name = '';
-						this.role.user_id = user.id;
+						this.role.user_id = '';
                         alert('Role Updated');
                         this.fetchRoles();
                     })
@@ -176,7 +199,7 @@
                 this.role.id = role.id;
                 this.role.role_id = role.id;
                 this.role.name = role.name;
-                this.role.used_id = role.user_id;
+                this.role.user_id = role.user_id;
             }
         },
 

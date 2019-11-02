@@ -1916,6 +1916,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Users_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Users.vue */ "./resources/js/components/Users.vue");
 //
 //
 //
@@ -1971,26 +1972,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      roles: [],
       role: {
         id: '',
         user_id: '',
         name: ''
       },
-      users: [],
       user: {
         id: '',
         name: '',
-        email: '',
-        password: ''
+        email: ''
       },
+      roles: [],
+      users: [],
       role_id: '',
       pagination: {},
       edit: false
     };
+  },
+  components: {
+    User: _Users_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   created: function created() {
     this.fetchRoles();
@@ -2005,8 +2018,11 @@ __webpack_require__.r(__webpack_exports__);
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
-        console.log(res.data);
-        _this.roles = res.data;
+        // Roles log to console
+        console.log(res.data); // this fetches role data
+
+        _this.roles = res.data; // Get this vue's structure pagination?
+
         vm.makePagination(res.meta, res.links);
       })["catch"](function (err) {
         return console.log(err);
@@ -2020,12 +2036,18 @@ __webpack_require__.r(__webpack_exports__);
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
-        console.log(res.data);
-        _this2.users = res.data;
+        // Users log to console
+        console.log(res.data); // this fetches user data
+
+        _this2.users = res.data; // Get this vue's structure pagination?
+
         vm.makePagination(res.meta, res.links);
       })["catch"](function (err) {
         return console.log(err);
       });
+    },
+    getUsers: function getUsers() {
+      console.log(this.users);
     },
     makePagination: function makePagination(meta, links) {
       var pagination = {
@@ -2087,7 +2109,7 @@ __webpack_require__.r(__webpack_exports__);
           return res.json();
         }).then(function (data) {
           _this4.role.name = '';
-          _this4.role.user_id = user.id;
+          _this4.role.user_id = '';
           alert('Role Updated');
 
           _this4.fetchRoles();
@@ -2101,7 +2123,7 @@ __webpack_require__.r(__webpack_exports__);
       this.role.id = role.id;
       this.role.role_id = role.id;
       this.role.name = role.name;
-      this.role.used_id = role.user_id;
+      this.role.user_id = role.user_id;
     }
   },
   mounted: function mounted() {
@@ -37993,9 +38015,17 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _vm._l(_vm.users, function(user) {
-                  return _c("option", { key: user.id }, [
-                    _vm._v(_vm._s(user.id))
-                  ])
+                  return _c(
+                    "option",
+                    { key: user.id, domProps: { value: user.id } },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(user.name) +
+                          "\n                "
+                      )
+                    ]
+                  )
                 })
               ],
               2
