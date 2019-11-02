@@ -19,12 +19,15 @@ class Role extends JsonResource
     {
         // return parent::toArray($request);
 
+        // Find user by there role.user.id
         $user = User::find($this->user_id);
 
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'user_id' => $user->name,
+            'user_id' => $this->user_id,
+            'user_name' => $user->name,
+            'user_email' => $user->email
         ];
     }
 }

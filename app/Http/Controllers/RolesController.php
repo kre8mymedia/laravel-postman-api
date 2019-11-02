@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Role;
 use App\Http\Resources\Role as RoleResource;
+use App\User;
 
 class RolesController extends Controller
 {

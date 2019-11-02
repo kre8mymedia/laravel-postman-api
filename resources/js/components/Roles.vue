@@ -1,15 +1,31 @@
 <template>
     <div class="container">
-        <h2>ROLE Component</h2> 
+        <h2>ROLE Component</h2>
+
+        <!-- COMPONENT FORM --> 
         <form @submit.prevent="addRole" class="mb-3">
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <input type="text" class="form-control" placeholder="Role User ID" v-model="role.user_id">
-            </div>
+            </div> -->
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Role Name" v-model="role.name">
             </div>
+
+            <!-- SELECT ROLE USER --> 
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Select User</label>
+                <select v-model="role.user_id" class="form-control" id="exampleFormControlSelect1">
+                    <option disabled value="">Please select one</option>
+                    <option v-for="user in users" v-bind:key="user.id">{{user.id}}</option>
+                </select>
+            </div>
+
+
             <button type="submit" class="btn btn-light btn-block">Save</button>
         </form>
+        <!-- END COMPONENT FORM -->
+
+        <!-- PAGINATION -->
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li v-bind:class="[{ disabled: !pagination.prev_page_url }]" class="page-item">
@@ -23,13 +39,17 @@
                 </li>
             </ul>
         </nav>
+        <!-- END PAGINATION -->
+
+        <!-- CARDS -->
         <div class="card card-body mb-2" v-for="role in roles" v-bind:key="role.id">
             <h3>{{ role.name }}</h3>
-            <p>{{ role.user_id }}</p>
+            <p>{{ role.user_name + " | " + role.user_email}}</p>
             <hr>
             <button @click="editRole(role)" class="btn btn-warning mb-2">Edit</button>
             <button @click="deleteRole(role.id)" class="btn btn-danger">Delete</button>
         </div>
+        <!-- END CARDS -->
     </div>
 </template>
 
@@ -40,17 +60,25 @@
                 roles: [],
                 role: {
                     id: '',
+                    user_id: '',
                     name: '',
-					user_id: '',
+                },
+                users: [],
+                user: {
+                    id: '',
+                    name: '',
+                    email: '',
+                    password: '',
                 },
                 role_id: '',
                 pagination: {},
-                edit: false
+                edit: false,
             }
         },
 
         created() {
             this.fetchRoles();
+            this.fetchUsers();
         },
 
         methods: {
@@ -60,8 +88,22 @@
                 fetch(page_url)
                 .then(res => res.json())
                 .then(res => {
-                    // console.log(res.data);
+                    console.log(res.data);
                     this.roles = res.data;
+                    vm.makePagination(res.meta, res.links);
+                })
+                .catch(err => console.log(err));
+            },
+
+            fetchUsers(page_url) {
+                let vm = this;
+                page_url = page_url || 'api/users'
+                fetch(page_url)
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res.data);
+                    this.users = res.data;
+                    vm.makePagination(res.meta, res.links);
                 })
                 .catch(err => console.log(err));
             },
@@ -121,7 +163,7 @@
                     .then(res => res.json())
                     .then(data => {
                         this.role.name = '';
-						this.role.user_id = '';
+						this.role.user_id = user.id;
                         alert('Role Updated');
                         this.fetchRoles();
                     })

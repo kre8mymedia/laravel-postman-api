@@ -1951,14 +1951,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       roles: [],
       role: {
         id: '',
+        user_id: '',
+        name: ''
+      },
+      users: [],
+      user: {
+        id: '',
         name: '',
-        user_id: ''
+        email: '',
+        password: ''
       },
       role_id: '',
       pagination: {},
@@ -1967,6 +1994,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.fetchRoles();
+    this.fetchUsers();
   },
   methods: {
     fetchRoles: function fetchRoles(page_url) {
@@ -1977,8 +2005,24 @@ __webpack_require__.r(__webpack_exports__);
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
-        // console.log(res.data);
+        console.log(res.data);
         _this.roles = res.data;
+        vm.makePagination(res.meta, res.links);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    fetchUsers: function fetchUsers(page_url) {
+      var _this2 = this;
+
+      var vm = this;
+      page_url = page_url || 'api/users';
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        console.log(res.data);
+        _this2.users = res.data;
+        vm.makePagination(res.meta, res.links);
       })["catch"](function (err) {
         return console.log(err);
       });
@@ -1993,7 +2037,7 @@ __webpack_require__.r(__webpack_exports__);
       this.pagination = pagination;
     },
     deleteRole: function deleteRole(id) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (confirm('Are you sure?')) {
         fetch("api/role/".concat(id), {
@@ -2003,14 +2047,14 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (data) {
           alert('Role Removed');
 
-          _this2.fetchRoles();
+          _this3.fetchRoles();
         })["catch"](function (err) {
           return console.log(err);
         });
       }
     },
     addRole: function addRole() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.edit === false) {
         // Add
@@ -2023,11 +2067,11 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (res) {
           return res.json();
         }).then(function (data) {
-          _this3.role.name = '';
-          _this3.role.user_id = '';
+          _this4.role.name = '';
+          _this4.role.user_id = '';
           alert('Role Added');
 
-          _this3.fetchRoles();
+          _this4.fetchRoles();
         })["catch"](function (err) {
           return console.log(err);
         });
@@ -2042,11 +2086,11 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (res) {
           return res.json();
         }).then(function (data) {
-          _this3.role.name = '';
-          _this3.role.user_id = '';
+          _this4.role.name = '';
+          _this4.role.user_id = user.id;
           alert('Role Updated');
 
-          _this3.fetchRoles();
+          _this4.fetchRoles();
         })["catch"](function (err) {
           return console.log(err);
         });
@@ -37889,30 +37933,6 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.role.user_id,
-                  expression: "role.user_id"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Role User ID" },
-              domProps: { value: _vm.role.user_id },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.role, "user_id", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
                   value: _vm.role.name,
                   expression: "role.name"
                 }
@@ -37929,6 +37949,57 @@ var render = function() {
                 }
               }
             })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "exampleFormControlSelect1" } }, [
+              _vm._v("Select User")
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.role.user_id,
+                    expression: "role.user_id"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { id: "exampleFormControlSelect1" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.role,
+                      "user_id",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { disabled: "", value: "" } }, [
+                  _vm._v("Please select one")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.users, function(user) {
+                  return _c("option", { key: user.id }, [
+                    _vm._v(_vm._s(user.id))
+                  ])
+                })
+              ],
+              2
+            )
           ]),
           _vm._v(" "),
           _c(
@@ -38005,7 +38076,7 @@ var render = function() {
         return _c("div", { key: role.id, staticClass: "card card-body mb-2" }, [
           _c("h3", [_vm._v(_vm._s(role.name))]),
           _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(role.user_id))]),
+          _c("p", [_vm._v(_vm._s(role.user_name + " | " + role.user_email))]),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
