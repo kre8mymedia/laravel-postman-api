@@ -1980,7 +1980,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -37974,10 +37973,6 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "exampleFormControlSelect1" } }, [
-              _vm._v("Select User")
-            ]),
-            _vm._v(" "),
             _c(
               "select",
               {
@@ -38011,7 +38006,7 @@ var render = function() {
               },
               [
                 _c("option", { attrs: { disabled: "", value: "" } }, [
-                  _vm._v("Please select one")
+                  _vm._v("Select a User")
                 ]),
                 _vm._v(" "),
                 _vm._l(_vm.users, function(user) {
@@ -38035,7 +38030,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-light btn-block",
+              staticClass: "btn btn-primary btn-block",
               attrs: { type: "submit" }
             },
             [_vm._v("Save")]

@@ -13,9 +13,8 @@
 
             <!-- SELECT ROLE USER --> 
             <div class="form-group">
-                <label for="exampleFormControlSelect1">Select User</label>
                 <select v-model="role.user_id" class="form-control" id="exampleFormControlSelect1">
-                    <option disabled value="">Please select one</option>
+                    <option disabled value="">Select a User</option>
                     <option v-for="user in users" :key="user.id" :value="user.id" >
                         {{user.name}}
                     </option>
@@ -30,7 +29,7 @@
             </div> -->
 
 
-            <button type="submit" class="btn btn-light btn-block">Save</button>
+            <button type="submit" class="btn btn-primary btn-block">Save</button>
         </form>
         <!-- END COMPONENT FORM -->
 
