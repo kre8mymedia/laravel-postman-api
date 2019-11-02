@@ -4,31 +4,27 @@
 
         <!-- COMPONENT FORM --> 
         <form @submit.prevent="addRole" class="mb-3">
-            <!-- <div class="form-group">
-                <input type="text" class="form-control" placeholder="Role User ID" v-model="role.user_id">
-            </div> -->
+            <!-- select ROLE -->
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Role Name" v-model="role.name">
+                <!-- <label for="exampleFormControlSelect1">Select Role</label> -->
+                <select v-model="role.name" class="form-control" id="exampleFormControlSelect1">
+                    <option disabled value="">Select a Role</option>
+                    <option value="Tenant">Tenant</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Tenant">Owner</option>
+                </select>
             </div>
 
-            <!-- SELECT ROLE USER --> 
+            <!-- select ROLE USER ID --> 
             <div class="form-group">
-                <select v-model="role.user_id" class="form-control" id="exampleFormControlSelect1">
+                <select v-model="role.user_id" class="form-control" id="exampleFormControlSelect2">
                     <option disabled value="">Select a User</option>
                     <option v-for="user in users" :key="user.id" :value="user.id" >
                         {{user.name}}
                     </option>
                 </select>
             </div>
-
-            <!-- <div class="form-group">
-                <label for="role_user_id">Select User</label>
-                <select id="role_user_id" class="form-control" v-model="role.user_id">
-                    <option v-for="user in users" v-bind:key="user.id">{{user.name}}</option>
-                </select>
-            </div> -->
-
-
+            <!-- submit --> 
             <button type="submit" class="btn btn-primary btn-block">Save</button>
         </form>
         <!-- END COMPONENT FORM -->
@@ -39,9 +35,7 @@
                 <li v-bind:class="[{ disabled: !pagination.prev_page_url }]" class="page-item">
                     <a @click="fetchRoles(pagination.prev_page_url)" class="page-link">Previous</a>
                 </li>
-
                 <li class="page-item disabled"><a class="page-link text-dark">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
-
                 <li v-bind:class="[{ disabled: !pagination.next_page_url }]" class="page-item">
                     <a @click="fetchRoles(pagination.next_page_url)" class="page-link">Next</a>
                 </li>
@@ -58,6 +52,7 @@
             <button @click="deleteRole(role.id)" class="btn btn-danger">Delete</button>
         </div>
         <!-- END CARDS -->
+
     </div>
 </template>
 

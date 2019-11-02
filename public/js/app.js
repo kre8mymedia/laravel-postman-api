@@ -1975,11 +1975,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -37949,27 +37944,53 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "form-group" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.role.name,
-                  expression: "role.name"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Role Name" },
-              domProps: { value: _vm.role.name },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.role.name,
+                    expression: "role.name"
                   }
-                  _vm.$set(_vm.role, "name", $event.target.value)
+                ],
+                staticClass: "form-control",
+                attrs: { id: "exampleFormControlSelect1" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.role,
+                      "name",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
                 }
-              }
-            })
+              },
+              [
+                _c("option", { attrs: { disabled: "", value: "" } }, [
+                  _vm._v("Select a Role")
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "Tenant" } }, [
+                  _vm._v("Tenant")
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "Manager" } }, [
+                  _vm._v("Manager")
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "Tenant" } }, [_vm._v("Owner")])
+              ]
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
@@ -37985,7 +38006,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { id: "exampleFormControlSelect1" },
+                attrs: { id: "exampleFormControlSelect2" },
                 on: {
                   change: function($event) {
                     var $$selectedVal = Array.prototype.filter
