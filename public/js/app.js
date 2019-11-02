@@ -1901,7 +1901,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log('Example Component mounted.');
   }
 });
 
@@ -2283,7 +2283,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    console.log('Test Component mounted.');
+    console.log('Tickets Component mounted.');
   }
 });
 
@@ -37988,7 +37988,7 @@ var render = function() {
                   _vm._v("Manager")
                 ]),
                 _vm._v(" "),
-                _c("option", { attrs: { value: "Tenant" } }, [_vm._v("Owner")])
+                _c("option", { attrs: { value: "Owner" } }, [_vm._v("Owner")])
               ]
             )
           ]),

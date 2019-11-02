@@ -31,6 +31,7 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
+
         // If method is put find article by role_id else make new Role
         $role = $request->isMethod('put') ? Role::findOrFail($request->role_id) : new Role;
 

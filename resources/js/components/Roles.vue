@@ -11,7 +11,7 @@
                     <option disabled value="">Select a Role</option>
                     <option value="Tenant">Tenant</option>
                     <option value="Manager">Manager</option>
-                    <option value="Tenant">Owner</option>
+                    <option value="Owner">Owner</option>
                 </select>
             </div>
 

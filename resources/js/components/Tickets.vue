@@ -141,7 +141,7 @@
         },
 
         mounted() {
-            console.log('Test Component mounted.')
+            console.log('Tickets Component mounted.')
         }
     }
 </script>
