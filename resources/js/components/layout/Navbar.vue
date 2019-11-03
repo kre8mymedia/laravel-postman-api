@@ -14,13 +14,13 @@
           <router-link class="nav-link" to="/tickets">Tickets</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/example">Example</router-link>
-        </li>
-        <li class="nav-item">
           <router-link class="nav-link" to="/users">Users</router-link>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/roles">Roles</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/example">Example</router-link>
         </li>
         <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

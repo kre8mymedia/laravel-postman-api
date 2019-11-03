@@ -38662,19 +38662,6 @@ var render = function() {
                 [
                   _c(
                     "router-link",
-                    { staticClass: "nav-link", attrs: { to: "/example" } },
-                    [_vm._v("Example")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                { staticClass: "nav-item" },
-                [
-                  _c(
-                    "router-link",
                     { staticClass: "nav-link", attrs: { to: "/users" } },
                     [_vm._v("Users")]
                   )
@@ -38690,6 +38677,19 @@ var render = function() {
                     "router-link",
                     { staticClass: "nav-link", attrs: { to: "/roles" } },
                     [_vm._v("Roles")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _c(
+                    "router-link",
+                    { staticClass: "nav-link", attrs: { to: "/example" } },
+                    [_vm._v("Example")]
                   )
                 ],
                 1
@@ -53901,9 +53901,6 @@ var routes = [{
   path: '/home',
   component: Home
 }, {
-  path: '/example',
-  component: ExampleComponent
-}, {
   path: '/tickets',
   component: Tickets
 }, {
@@ -53912,6 +53909,9 @@ var routes = [{
 }, {
   path: '/roles',
   component: Roles
+}, {
+  path: '/example',
+  component: ExampleComponent
 }];
 var router = new VueRouter({
   mode: 'history',

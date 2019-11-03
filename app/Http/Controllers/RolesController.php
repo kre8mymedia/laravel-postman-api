@@ -35,7 +35,7 @@ class RolesController extends Controller
     {
         $request_role_name = $request->input('name');
 
-        if($request_role_name == 'Owner') {
+        if ($request_role_name == 'Owner') {
             $request_role_name = 'Owner';
         } elseif ($request_role_name == 'Manager') {
             $request_role_name = 'Manager';

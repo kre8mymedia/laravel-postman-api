@@ -17,10 +17,10 @@ const Roles = Vue.component('Role', require('./components/Roles.vue').default);
 
 const routes = [
     { path: '/home', component: Home },
-    { path: '/example', component: ExampleComponent },
     { path: '/tickets', component: Tickets },
     { path: '/users', component: Users },
     { path: '/roles', component: Roles },
+    { path: '/example', component: ExampleComponent },
 ]
 
 const router = new VueRouter({

@@ -89,15 +89,13 @@
           <li><a href="#footer">Contact Us</a></li>
           <li class="drop-down"><a href="">Login</a>
             <ul>
-              <li><a href="/dashboard">Login</a></li>
-              <li class="drop-down"><a href="#">Register</a>
-                <ul>
-                  <li><a href="#">Dashboard</a></li>
-                </ul>
-              </li>
+              <li><a href="/login">Login</a></li>
+              <li><a href="/register">Register</a>
+              <li><a href="/dashboard">Dashboard</a></li>
             </ul>
           </li>
-
+        </ul>
+      </nav>
     </div>
   </header><!-- #header -->
 
