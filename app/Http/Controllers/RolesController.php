@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Role;
 use App\Http\Resources\Role as RoleResource;
 use App\User;
+use App\Owner;
 use Illuminate\Validation\Rule;
 use App\Rules\ValidRoleName;
 
@@ -34,6 +35,7 @@ class RolesController extends Controller
     public function store(Request $request)
     {
         $request_role_name = $request->input('name');
+        $request_user_id = $request->input('user_id');
 
         if ($request_role_name == 'Owner') {
             $request_role_name = 'Owner';
@@ -48,11 +50,17 @@ class RolesController extends Controller
         // If method is put find Role by role_id else make new Role
         $role = $request->isMethod('put') ? Role::findOrFail($request->role_id) : new Role;
         // save request inputs to model properties
-        $role->id = $request->input('role_id');
         $role->name = $request_role_name;
-        $role->user_id = $request->input('user_id');
+        $role->user_id = $request_user_id;
+        $role->save();
 
-        if ($role->save()) {
+        $owner = new Owner;
+        $owner->role_id = $role->id;
+        $owner->save();
+
+        // echo $owner->role_id;
+
+        if ($owner->save()) {
             return new RoleResource($role);
         }
     }

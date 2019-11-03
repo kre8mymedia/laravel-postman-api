@@ -10,4 +10,20 @@ class Role extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function tenant()
+    {
+        return $this->belongsTo('App\Tenant');
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo('App\Owner');
+    }
+
+    public function manager()
+    {
+        return $this->belongsTo('App\Manager');
+    }
+    
 }

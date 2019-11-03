@@ -151,7 +151,7 @@
                     .then(res => res.json())
                     .then(data => {
 						this.owner.role_id = '';
-                        alert('Owner Updated');
+						alert('Owner Updated');
                         this.fetchOwners();
                     })
                     .catch(err =>console.log(err));
