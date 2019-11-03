@@ -55,6 +55,25 @@ class DatabaseSeeder extends Seeder
         $x->user_id = 3;
         $x->name = 'Tenant';
         $x->save();
+
+        $x = new App\Manager;
+        $x->role_id = 1;
+        $x->save();
+
+        $x = new App\Owner;
+        $x->role_id = 2;
+        $x->save();
+
+        $x = new App\Tenant;
+        $x->role_id = 3;
+        $x->property_id = 1;
+        $x->save();
+
+        $x = new App\Property;
+        $x->owner_id = 1;
+        $x->manager_id = 1;
+        $x->address = "4888 S. Highland Cir. Salt Lake City, UT 84117";
+        $x->save();
         
     }
 }

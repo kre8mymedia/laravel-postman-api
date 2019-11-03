@@ -28,6 +28,8 @@ Route::put('ticket', 'TicketsController@store');
 // DELETE Ticket
 Route::delete('ticket/{id}', 'TicketsController@destroy');
 
+// ----------------------------------------------------------------
+
 // LIST Users
 Route::get('users', 'UsersController@index');
 // SINGLE User
@@ -39,6 +41,8 @@ Route::put('user', 'UsersController@store');
 // DELETE User
 Route::delete('user/{id}', 'UsersController@destroy');
 
+// ----------------------------------------------------------------
+
 // LIST Roles
 Route::get('roles', 'RolesController@index');
 // SINGLE Role
@@ -49,3 +53,16 @@ Route::post('role', 'RolesController@store');
 Route::put('role', 'RolesController@store');
 // DELETE Role
 Route::delete('role/{id}', 'RolesController@destroy');
+
+// ----------------------------------------------------------------
+
+// LIST Roles
+Route::get('owners', 'OwnersController@index');
+// SINGLE Role
+Route::get('owner/{id}', 'OwnersController@show');
+// CREATE Role
+Route::post('owner', 'OwnersController@store');
+// UPDATE Role
+Route::put('owner', 'OwnersController@store');
+// DELETE Role
+Route::delete('owner/{id}', 'OwnersController@destroy');
