@@ -7,18 +7,27 @@ Vue.config.productionTip = false
 
 Vue.use(VueRouter);
 
-const Home = Vue.component('Home', require('./views/Home.vue').default);
-const Tickets = Vue.component('Ticket', require('./components/Tickets.vue').default);
-const Owners = Vue.component('Owner', require('./components/Owners.vue').default);
+// App Components
 const ExampleComponent = Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('Navbar', require('./components/layout/Navbar.vue').default);
 const App = Vue.component('App', require('./App.vue').default);
+const Home = Vue.component('Home', require('./views/Home.vue').default);
 const Users = Vue.component('User', require('./components/Users.vue').default);
+
+// Layout Components
+Vue.component('Navbar', require('./components/layout/Navbar.vue').default);
+
+// Role Components
 const Roles = Vue.component('Role', require('./components/Roles.vue').default);
+const Managers = Vue.component('Manager', require('./components/Managers.vue').default);
+const Owners = Vue.component('Owner', require('./components/Owners.vue').default);
+
+// Object Components
+const Tickets = Vue.component('Ticket', require('./components/Tickets.vue').default);
 
 const routes = [
     { path: '/home', component: Home },
     { path: '/tickets', component: Tickets },
+    { path: '/managers', component: Managers },
     { path: '/owners', component: Owners },
     { path: '/users', component: Users },
     { path: '/roles', component: Roles },
