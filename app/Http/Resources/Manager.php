@@ -6,7 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Role;
 use App\User;
 
-class Owner extends JsonResource
+class Manager extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,11 +18,11 @@ class Owner extends JsonResource
     {
         // return parent::toArray($request);
 
-        // Role this Owner belongs to
+        // Role this Manager belongs to
         $role = Role::find($this->role_id);
-        // User this Owner belongs to
+        // User this Manager belongs to
         $user = User::find($role->user_id);
-        
+
         return [
             'id' => $this->id,
             'role_id' => $this->role_id,

@@ -56,13 +56,26 @@ Route::delete('role/{id}', 'RolesController@destroy');
 
 // ----------------------------------------------------------------
 
-// LIST Roles
+// LIST Owners
 Route::get('owners', 'OwnersController@index');
-// SINGLE Role
+// SINGLE Owner
 Route::get('owner/{id}', 'OwnersController@show');
-// CREATE Role
+// CREATE Owner
 Route::post('owner', 'OwnersController@store');
-// UPDATE Role
+// UPDATE Owner
 Route::put('owner', 'OwnersController@store');
-// DELETE Role
+// DELETE Owner
 Route::delete('owner/{id}', 'OwnersController@destroy');
+
+// ----------------------------------------------------------------
+
+// LIST Managers
+Route::get('managers', 'ManagersController@index');
+// SINGLE Manager
+Route::get('manager/{id}', 'ManagersController@show');
+// CREATE Manager
+Route::post('manager', 'ManagersController@store');
+// UPDATE Manager
+Route::put('manager', 'ManagersController@store');
+// DELETE Manager
+Route::delete('manager/{id}', 'ManagersController@destroy');
