@@ -1916,7 +1916,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Users_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Users.vue */ "./resources/js/components/Users.vue");
 //
 //
 //
@@ -1975,7 +1974,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1995,9 +1993,6 @@ __webpack_require__.r(__webpack_exports__);
       pagination: {},
       edit: false
     };
-  },
-  components: {
-    User: _Users_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   created: function created() {
     this.fetchRoles();

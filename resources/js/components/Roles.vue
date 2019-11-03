@@ -57,7 +57,6 @@
 </template>
 
 <script>
-    import User from './Users.vue';
     export default {
         data() {
             return {
@@ -77,10 +76,6 @@
                 pagination: {},
                 edit: false,
             }
-        },
-
-        components: {
-            User,
         },
 
         created() {
