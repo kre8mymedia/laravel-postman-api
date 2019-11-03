@@ -8,8 +8,8 @@ use App\Role;
 use App\Http\Resources\Role as RoleResource;
 use App\User;
 use App\Owner;
-use Illuminate\Validation\Rule;
-use App\Rules\ValidRoleName;
+use App\Manager;
+use App\Tenant;
 
 class RolesController extends Controller
 {
@@ -34,9 +34,11 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
+        // Store inputs as variables
         $request_role_name = $request->input('name');
         $request_user_id = $request->input('user_id');
 
+        // Check to see what the ROLE is, if not equal to strings return null
         if ($request_role_name == 'Owner') {
             $request_role_name = 'Owner';
         } elseif ($request_role_name == 'Manager') {
@@ -54,13 +56,23 @@ class RolesController extends Controller
         $role->user_id = $request_user_id;
         $role->save();
 
-        $owner = new Owner;
-        $owner->role_id = $role->id;
-        $owner->save();
+        // Check if role->name and create new Model equal to the Role, create save variable for data
+        if ($role->name == 'Owner') {
+            $owner = new Owner;
+            $owner->role_id = $role->id;
+            $save = $owner->save();
+        } elseif ($role->name == 'Manager') {
+            $manager = new Manager;
+            $manager->role_id = $role->id;
+            $save = $manager->save();
+        } elseif ($role->name == 'Tenant') {
+            $tenant = new Tenant;
+            $tenant->role_id = $role->id;
+            $save = $tenant->save();
+        }
 
-        // echo $owner->role_id;
-
-        if ($owner->save()) {
+        // if save variable received return payload
+        if ($save) {
             return new RoleResource($role);
         }
     }

@@ -17,6 +17,7 @@ class CreateManagersTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('role_id')->unsigned()->index();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

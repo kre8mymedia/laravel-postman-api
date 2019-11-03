@@ -18,6 +18,7 @@ class CreateTenantsTable extends Migration
             $table->bigInteger('role_id')->unsigned()->index();
             $table->bigInteger('property_id')->unsigned()->index()->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
