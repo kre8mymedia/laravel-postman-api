@@ -1960,12 +1960,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   // Data object to be return with component after render
   data: function data() {
@@ -1975,13 +1969,15 @@ __webpack_require__.r(__webpack_exports__);
         id: '',
         role_id: ''
       },
-      role_id: '',
+      roles: [],
+      owner_id: '',
       pagination: {},
       edit: false
     };
   },
   created: function created() {
     this.fetchOwners();
+    this.fetchRoles();
   },
   methods: {
     fetchOwners: function fetchOwners(page_url) {
@@ -2002,6 +1998,24 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(err);
       });
     },
+    fetchRoles: function fetchRoles(page_url) {
+      var _this2 = this;
+
+      var vm = this;
+      page_url = page_url || 'api/roles';
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        // Users log to console
+        console.log(res.data); // this fetches user data
+
+        _this2.users = res.data; // Get this vue's structure pagination?
+
+        vm.makePagination(res.meta, res.links);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
     makePagination: function makePagination(meta, links) {
       var pagination = {
         current_page: meta.current_page,
@@ -2010,6 +2024,70 @@ __webpack_require__.r(__webpack_exports__);
         prev_page_url: links.prev
       };
       this.pagination = pagination;
+    },
+    deleteOwner: function deleteOwner(id) {
+      var _this3 = this;
+
+      if (confirm('Are you sure?')) {
+        fetch("api/owner/".concat(id), {
+          method: 'delete'
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          alert('Owner Removed');
+
+          _this3.fetchOwners();
+        })["catch"](function (err) {
+          return console.log(err);
+        });
+      }
+    },
+    addOwner: function addOwner() {
+      var _this4 = this;
+
+      if (this.edit === false) {
+        // Add
+        fetch('api/owner', {
+          method: 'post',
+          body: JSON.stringify(this.owner),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          _this4.owner.role_id = '';
+          alert('Owner Added');
+
+          _this4.fetchOwners();
+        })["catch"](function (err) {
+          return console.log(err);
+        });
+      } else {
+        // Update
+        fetch('api/owner', {
+          method: 'put',
+          body: JSON.stringify(this.owner),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          _this4.owner.role_id = '';
+          alert('Owner Updated');
+
+          _this4.fetchOwners();
+        })["catch"](function (err) {
+          return console.log(err);
+        });
+      }
+    },
+    editOwner: function editOwner(owner) {
+      this.edit = true;
+      this.owner.id = owner.id;
+      this.owner.owner_id = owner.id;
+      this.owner.role_id = owner.role_id;
     }
   },
   mounted: function mounted() {
@@ -38048,12 +38126,34 @@ var render = function() {
           on: {
             submit: function($event) {
               $event.preventDefault()
-              return _vm.addRole($event)
+              return _vm.addOwner($event)
             }
           }
         },
         [
-          _vm._m(0),
+          _c("div", { staticClass: "form-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.owner.role_id,
+                  expression: "owner.role_id"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Role ID" },
+              domProps: { value: _vm.owner.role_id },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.owner, "role_id", $event.target.value)
+                }
+              }
+            })
+          ]),
           _vm._v(" "),
           _c(
             "button",
@@ -38172,27 +38272,7 @@ var render = function() {
     2
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "exampleFormControlSelect1" } }, [
-        _vm._v("Select Role ID")
-      ]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          staticClass: "form-control",
-          attrs: { id: "exampleFormControlSelect7" }
-        },
-        [_c("option", [_vm._v("1")]), _vm._v(" "), _c("option", [_vm._v("2")])]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

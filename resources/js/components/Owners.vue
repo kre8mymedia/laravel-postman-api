@@ -3,17 +3,11 @@
      	<h2>OWNER Component</h2>
 
 		<!-- COMPONENT FORM --> 
-        <form @submit.prevent="addRole" class="mb-3">
+        <form @submit.prevent="addOwner" class="mb-3">
 
-			<!-- COMPONENT FORM -->
 			<div class="form-group">
-				<label for="exampleFormControlSelect1">Select Role ID</label>
-				<select class="form-control" id="exampleFormControlSelect7">
-					<option>1</option>
-					<option>2</option>
-				</select>
-			</div>
-			<!-- END COMPONENT FORM -->
+                <input type="text" class="form-control" placeholder="Role ID" v-model="owner.role_id">
+            </div>
 
 			<!-- submit --> 
 				<button type="submit" class="btn btn-primary btn-block">Save</button>
@@ -58,7 +52,8 @@
 					id: '',
 					role_id: '',
 				},
-                role_id: '',
+				roles:[],
+                owner_id: '',
                 pagination: {},
                 edit: false,
 			}
@@ -66,6 +61,7 @@
 
 		created() {
 			this.fetchOwners();
+			this.fetchRoles();
 		},
 
 		methods: {
@@ -85,6 +81,22 @@
                 .catch(err => console.log(err));	
 			},
 
+			fetchRoles(page_url) {
+                let vm = this;
+                page_url = page_url || 'api/roles'
+                fetch(page_url)
+                .then(res => res.json())
+                .then(res => {
+                    // Users log to console
+                    console.log(res.data);
+                    // this fetches user data
+                    this.users = res.data;
+                    // Get this vue's structure pagination?
+                    vm.makePagination(res.meta, res.links);
+                })
+                .catch(err => console.log(err));
+            },
+
 			makePagination(meta, links) {
 				let pagination = {
 					current_page: meta.current_page,
@@ -94,7 +106,65 @@
 				};
 				
 				this.pagination = pagination;
+			},
+			
+			deleteOwner(id) {
+                if (confirm('Are you sure?')) {
+                    fetch(`api/owner/${id}`, {
+                        method: 'delete'
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        alert('Owner Removed')
+                        this.fetchOwners();
+                    })
+                    .catch(err => console.log(err));
+                }
+            },
+
+            addOwner() {
+                if(this.edit === false) {
+                    // Add
+                    fetch('api/owner', {
+                        method: 'post',
+                        body: JSON.stringify(this.owner),
+                        headers: {
+                            'content-type': 'application/json'
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        this.owner.role_id = '';
+                        alert('Owner Added');
+                        this.fetchOwners();
+                    })
+                    .catch(err =>console.log(err));
+                } else {
+                    // Update
+                    fetch('api/owner', {
+                        method: 'put',
+                        body: JSON.stringify(this.owner),
+                        headers: {
+                            'content-type': 'application/json'
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+						this.owner.role_id = '';
+                        alert('Owner Updated');
+                        this.fetchOwners();
+                    })
+                    .catch(err =>console.log(err));
+                }
+            },
+
+            editOwner(owner) {
+				this.edit = true;
+				this.owner.id = owner.id;
+				this.owner.owner_id = owner.id;
+                this.owner.role_id = owner.role_id;
             }
+
 		},
 
         mounted() {
