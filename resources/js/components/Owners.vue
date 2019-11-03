@@ -2,14 +2,22 @@
    	<div class="container">
      	<h2>OWNER Component</h2>
 
-		<!-- COMPONENT FORM -->
-		<div class="form-group">
-			<label for="exampleFormControlSelect1">Select Role ID</label>
-			<select class="form-control" id="exampleFormControlSelect1">
-				<option>1</option>
-				<option>2</option>
-			</select>
-		</div>
+		<!-- COMPONENT FORM --> 
+        <form @submit.prevent="addRole" class="mb-3">
+
+			<!-- COMPONENT FORM -->
+			<div class="form-group">
+				<label for="exampleFormControlSelect1">Select Role ID</label>
+				<select class="form-control" id="exampleFormControlSelect7">
+					<option>1</option>
+					<option>2</option>
+				</select>
+			</div>
+			<!-- END COMPONENT FORM -->
+
+			<!-- submit --> 
+				<button type="submit" class="btn btn-primary btn-block">Save</button>
+		</form>
 		<!-- END COMPONENT FORM -->
 
 		<!-- PAGINATION -->
@@ -30,6 +38,8 @@
         <div class="card card-body mb-2" v-for="owner in owners" v-bind:key="owner.id">
             <h3>Owner ID: {{ owner.id }}</h3>
             <p>Owner Role ID: {{ owner.role_id }}</p>
+			<p>Owner Name: {{ owner.name }}</p>
+			<p>Owner Email: {{ owner.email }}</p>
             <hr>
             <button @click="editOwner(owner)" class="btn btn-warning mb-2">Edit</button>
             <button @click="deleteOwner(owner.id)" class="btn btn-danger">Delete</button>

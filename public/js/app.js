@@ -1956,6 +1956,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   // Data object to be return with component after render
   data: function data() {
@@ -38031,7 +38041,30 @@ var render = function() {
     [
       _c("h2", [_vm._v("OWNER Component")]),
       _vm._v(" "),
-      _vm._m(0),
+      _c(
+        "form",
+        {
+          staticClass: "mb-3",
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.addRole($event)
+            }
+          }
+        },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary btn-block",
+              attrs: { type: "submit" }
+            },
+            [_vm._v("Save")]
+          )
+        ]
+      ),
       _vm._v(" "),
       _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
         _c("ul", { staticClass: "pagination" }, [
@@ -38101,6 +38134,10 @@ var render = function() {
             _vm._v(" "),
             _c("p", [_vm._v("Owner Role ID: " + _vm._s(owner.role_id))]),
             _vm._v(" "),
+            _c("p", [_vm._v("Owner Name: " + _vm._s(owner.name))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Owner Email: " + _vm._s(owner.email))]),
+            _vm._v(" "),
             _c("hr"),
             _vm._v(" "),
             _c(
@@ -38149,7 +38186,7 @@ var staticRenderFns = [
         "select",
         {
           staticClass: "form-control",
-          attrs: { id: "exampleFormControlSelect1" }
+          attrs: { id: "exampleFormControlSelect7" }
         },
         [_c("option", [_vm._v("1")]), _vm._v(" "), _c("option", [_vm._v("2")])]
       )
