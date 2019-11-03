@@ -31,7 +31,7 @@
             <h3>Owner ID: {{ owner.id }}</h3>
             <p>Owner Role ID: {{ owner.role_id }}</p>
             <hr>
-            <button @click="editOwner(role)" class="btn btn-warning mb-2">Edit</button>
+            <button @click="editOwner(owner)" class="btn btn-warning mb-2">Edit</button>
             <button @click="deleteOwner(owner.id)" class="btn btn-danger">Delete</button>
         </div>
         <!-- END CARDS -->
@@ -40,6 +40,7 @@
 
 <script>
     export default {
+		// Data object to be return with component after render
 		data() {
 			return {
 				owners:[],
@@ -51,6 +52,39 @@
                 pagination: {},
                 edit: false,
 			}
+		},
+
+		created() {
+			this.fetchOwners();
+		},
+
+		methods: {
+			fetchOwners(page_url) {
+				let vm = this;
+                page_url = page_url || 'api/owners'
+                fetch(page_url)
+                .then(res => res.json())
+                .then(res => {
+                    // Owners log to console
+                    console.log(res.data);
+                    // this fetches owners data
+                    this.owners = res.data;
+                    // Get this vue's structure pagination?
+                    vm.makePagination(res.meta, res.links);
+                })
+                .catch(err => console.log(err));	
+			},
+
+			makePagination(meta, links) {
+				let pagination = {
+					current_page: meta.current_page,
+					last_page: meta.last_page,
+					next_page_url: links.next,
+					prev_page_url: links.prev
+				};
+				
+				this.pagination = pagination;
+            }
 		},
 
         mounted() {

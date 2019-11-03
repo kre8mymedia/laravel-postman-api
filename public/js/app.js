@@ -1957,6 +1957,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  // Data object to be return with component after render
   data: function data() {
     return {
       owners: [],
@@ -1968,6 +1969,38 @@ __webpack_require__.r(__webpack_exports__);
       pagination: {},
       edit: false
     };
+  },
+  created: function created() {
+    this.fetchOwners();
+  },
+  methods: {
+    fetchOwners: function fetchOwners(page_url) {
+      var _this = this;
+
+      var vm = this;
+      page_url = page_url || 'api/owners';
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        // Owners log to console
+        console.log(res.data); // this fetches owners data
+
+        _this.owners = res.data; // Get this vue's structure pagination?
+
+        vm.makePagination(res.meta, res.links);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    makePagination: function makePagination(meta, links) {
+      var pagination = {
+        current_page: meta.current_page,
+        last_page: meta.last_page,
+        next_page_url: links.next,
+        prev_page_url: links.prev
+      };
+      this.pagination = pagination;
+    }
   },
   mounted: function mounted() {
     console.log('Owner Component mounted.');
@@ -38076,7 +38109,7 @@ var render = function() {
                 staticClass: "btn btn-warning mb-2",
                 on: {
                   click: function($event) {
-                    return _vm.editOwner(_vm.role)
+                    return _vm.editOwner(owner)
                   }
                 }
               },
