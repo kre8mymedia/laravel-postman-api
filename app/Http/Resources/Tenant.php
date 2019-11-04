@@ -3,6 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Role;
+use App\User;
 
 class Tenant extends JsonResource
 {
@@ -14,6 +16,19 @@ class Tenant extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+
+        // Role this Tenant belongs to
+        $role = Role::find($this->role_id);
+        // User this Tenant belongs to
+        $user = User::find($role->user_id);
+        
+        return [
+            'id' => $this->id,
+            'role_id' => $this->role_id,
+            'user_id' => $role->user_id,
+            'name' => $user->name,
+            'email' => $user->email
+        ];
     }
 }
