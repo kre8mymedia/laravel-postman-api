@@ -79,3 +79,16 @@ Route::post('manager', 'ManagersController@store');
 Route::put('manager', 'ManagersController@store');
 // DELETE Manager
 Route::delete('manager/{id}', 'ManagersController@destroy');
+
+// ----------------------------------------------------------------
+
+// LIST Tenants
+Route::get('tenants', 'TenantsController@index');
+// SINGLE Tenant
+Route::get('tenant/{id}', 'TenantsController@show');
+// CREATE Tenant
+Route::post('tenant', 'TenantsController@store');
+// UPDATE Tenant
+Route::put('tenant', 'TenantsController@store');
+// DELETE Tenant
+Route::delete('tenant/{id}', 'TenantsController@destroy');
