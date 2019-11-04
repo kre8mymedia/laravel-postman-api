@@ -2523,9 +2523,146 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  // Data object to be return with component after render
+  data: function data() {
+    return {
+      tenants: [],
+      tenant: {
+        id: '',
+        role_id: ''
+      },
+      tenant_id: '',
+      pagination: {},
+      edit: false
+    };
+  },
+  created: function created() {
+    this.fetchTenants();
+  },
+  methods: {
+    fetchTenants: function fetchTenants(page_url) {
+      var _this = this;
+
+      var vm = this;
+      page_url = page_url || 'api/tenants';
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        // Tenants log to console
+        console.log(res.data); // this fetches tenants data
+
+        _this.tenants = res.data; // Get this vue's structure pagination?
+
+        vm.makePagination(res.meta, res.links);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    makePagination: function makePagination(meta, links) {
+      var pagination = {
+        current_page: meta.current_page,
+        last_page: meta.last_page,
+        next_page_url: links.next,
+        prev_page_url: links.prev
+      };
+      this.pagination = pagination;
+    },
+    deleteTenant: function deleteTenant(id) {
+      var _this2 = this;
+
+      if (confirm('Are you sure?')) {
+        fetch("api/tenant/".concat(id), {
+          method: 'delete'
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          alert('Tenant Removed');
+
+          _this2.fetchTenants();
+        })["catch"](function (err) {
+          return console.log(err);
+        });
+      }
+    },
+    addTenant: function addTenant() {
+      var _this3 = this;
+
+      if (this.edit === false) {
+        // Add
+        fetch('api/tenant', {
+          method: 'post',
+          body: JSON.stringify(this.tenant),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          _this3.tenant.role_id = '';
+          alert('Tenant Added');
+
+          _this3.fetchTenants();
+        })["catch"](function (err) {
+          return console.log(err);
+        });
+      } else {
+        // Update
+        fetch('api/tenant', {
+          method: 'put',
+          body: JSON.stringify(this.tenant),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          _this3.tenant.role_id = '';
+          alert('Tenant Updated');
+
+          _this3.fetchTenants();
+        })["catch"](function (err) {
+          return console.log(err);
+        });
+      }
+    },
+    editTenant: function editTenant(tenant) {
+      this.edit = true;
+      this.tenant.id = tenant.id;
+      this.tenant.manager_id = tenant.id;
+      this.tenant.role_id = tenant.role_id;
+    }
+  },
   mounted: function mounted() {
-    console.log('TENANTS Component mounted.');
+    console.log('TENANT Component mounted.');
   }
 });
 
@@ -38954,32 +39091,166 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Tenants Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("h2", [_vm._v("TENANT Component")]),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          staticClass: "mb-3",
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.addTenant($event)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "form-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.tenant.role_id,
+                  expression: "tenant.role_id"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Role ID" },
+              domProps: { value: _vm.tenant.role_id },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.tenant, "role_id", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary btn-block",
+              attrs: { type: "submit" }
+            },
+            [_vm._v("Save")]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+        _c("ul", { staticClass: "pagination" }, [
+          _c(
+            "li",
+            {
+              staticClass: "page-item",
+              class: [{ disabled: !_vm.pagination.prev_page_url }]
+            },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "page-link",
+                  on: {
+                    click: function($event) {
+                      return _vm.fetchTenants(_vm.pagination.prev_page_url)
+                    }
+                  }
+                },
+                [_vm._v("Previous")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("li", { staticClass: "page-item disabled" }, [
+            _c("a", { staticClass: "page-link text-dark" }, [
               _vm._v(
-                "\n                    I'm an Tenants component.\n                "
+                "Page " +
+                  _vm._s(_vm.pagination.current_page) +
+                  " of " +
+                  _vm._s(_vm.pagination.last_page)
               )
             ])
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "li",
+            {
+              staticClass: "page-item",
+              class: [{ disabled: !_vm.pagination.next_page_url }]
+            },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "page-link",
+                  on: {
+                    click: function($event) {
+                      return _vm.fetchTenants(_vm.pagination.next_page_url)
+                    }
+                  }
+                },
+                [_vm._v("Next")]
+              )
+            ]
+          )
         ])
-      ])
-    ])
-  }
-]
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.tenants, function(tenant) {
+        return _c(
+          "div",
+          { key: tenant.id, staticClass: "card card-body mb-2" },
+          [
+            _c("h3", [_vm._v("Tenant ID: " + _vm._s(tenant.id))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Tenant Role ID: " + _vm._s(tenant.role_id))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Tenant Name: " + _vm._s(tenant.name))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Tenant Email: " + _vm._s(tenant.email))]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning mb-2",
+                on: {
+                  click: function($event) {
+                    return _vm.fetchTenant(tenant)
+                  }
+                }
+              },
+              [_vm._v("Edit")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                on: {
+                  click: function($event) {
+                    return _vm.fetchTenant(tenant.id)
+                  }
+                }
+              },
+              [_vm._v("Delete")]
+            )
+          ]
+        )
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
