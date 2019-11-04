@@ -48,7 +48,6 @@
             <h3>{{ role.name }}</h3>
             <p>{{ role.user_name + " | " + role.user_email}}</p>
             <hr>
-            <button @click="editRole(role)" class="btn btn-warning mb-2">Edit</button>
             <button @click="deleteRole(role.id)" class="btn btn-danger">Delete</button>
         </div>
         <!-- END CARDS -->
@@ -163,33 +162,9 @@
                         this.fetchRoles();
                     })
                     .catch(err =>console.log(err));
-                } else {
-                    // Update
-                    fetch('api/role', {
-                        method: 'put',
-                        body: JSON.stringify(this.role),
-                        headers: {
-                            'content-type': 'application/json'
-                        }
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        this.role.name = '';
-						this.role.user_id = '';
-                        alert('Role Updated');
-                        this.fetchRoles();
-                    })
-                    .catch(err =>console.log(err));
-                }
+                } 
             },
 
-            editRole(role) {
-                this.edit = true;
-                this.role.id = role.id;
-                this.role.role_id = role.id;
-                this.role.name = role.name;
-                this.role.user_id = role.user_id;
-            }
         },
 
         mounted() {

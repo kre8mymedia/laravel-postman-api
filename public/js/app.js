@@ -2322,7 +2322,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2435,33 +2434,7 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (err) {
           return console.log(err);
         });
-      } else {
-        // Update
-        fetch('api/role', {
-          method: 'put',
-          body: JSON.stringify(this.role),
-          headers: {
-            'content-type': 'application/json'
-          }
-        }).then(function (res) {
-          return res.json();
-        }).then(function (data) {
-          _this4.role.name = '';
-          _this4.role.user_id = '';
-          alert('Role Updated');
-
-          _this4.fetchRoles();
-        })["catch"](function (err) {
-          return console.log(err);
-        });
       }
-    },
-    editRole: function editRole(role) {
-      this.edit = true;
-      this.role.id = role.id;
-      this.role.role_id = role.id;
-      this.role.name = role.name;
-      this.role.user_id = role.user_id;
     }
   },
   mounted: function mounted() {
@@ -38850,19 +38823,6 @@ var render = function() {
           _c("p", [_vm._v(_vm._s(role.user_name + " | " + role.user_email))]),
           _vm._v(" "),
           _c("hr"),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-warning mb-2",
-              on: {
-                click: function($event) {
-                  return _vm.editRole(role)
-                }
-              }
-            },
-            [_vm._v("Edit")]
-          ),
           _vm._v(" "),
           _c(
             "button",

@@ -31,6 +31,24 @@ class DatabaseSeeder extends Seeder
         $x->password = 'changeme123';
         $x->save();
 
+        $x = new App\User;
+        $x->name = 'Melanie';
+        $x->email = 'Melanie@test.com';
+        $x->password = 'changeme123';
+        $x->save();
+
+        $x = new App\User;
+        $x->name = 'Ben';
+        $x->email = 'Ben@test.com';
+        $x->password = 'changeme123';
+        $x->save();
+
+        $x = new App\User;
+        $x->name = 'Jason';
+        $x->email = 'Jason@test.com';
+        $x->password = 'changeme123';
+        $x->save();
+
         $x = new App\Ticket;
         $x->title = 'I have this problem';
         $x->body = 'This is the logng form description of problem Im having';
