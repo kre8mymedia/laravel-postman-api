@@ -18,6 +18,7 @@ Vue.component('Navbar', require('./components/layout/Navbar.vue').default);
 
 // Role Components
 const Roles = Vue.component('Role', require('./components/Roles.vue').default);
+const Tenants = Vue.component('Tenant', require('./components/Tenants.vue').default);
 const Managers = Vue.component('Manager', require('./components/Managers.vue').default);
 const Owners = Vue.component('Owner', require('./components/Owners.vue').default);
 
@@ -27,6 +28,7 @@ const Tickets = Vue.component('Ticket', require('./components/Tickets.vue').defa
 const routes = [
     { path: '/home', component: Home },
     { path: '/tickets', component: Tickets },
+    { path: '/tenants', component: Tenants },
     { path: '/managers', component: Managers },
     { path: '/owners', component: Owners },
     { path: '/users', component: Users },
