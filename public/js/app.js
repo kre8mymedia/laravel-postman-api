@@ -2281,9 +2281,146 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      properties: [],
+      property: {
+        id: '',
+        owner_id: '',
+        manager_id: '',
+        address: ''
+      },
+      property_id: '',
+      pagination: {},
+      edit: false
+    };
+  },
+  created: function created() {
+    this.fetchProperties();
+  },
+  methods: {
+    fetchProperties: function fetchProperties(page_url) {
+      var _this = this;
+
+      var vm = this;
+      page_url = page_url || 'api/properties';
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        // console.log(res.data);
+        _this.properties = res.data;
+        vm.makePagination(res.meta, res.links);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    makePagination: function makePagination(meta, links) {
+      var pagination = {
+        current_page: meta.current_page,
+        last_page: meta.last_page,
+        next_page_url: links.next,
+        prev_page_url: links.prev
+      };
+      this.pagination = pagination;
+    },
+    deleteProperty: function deleteProperty(id) {
+      var _this2 = this;
+
+      if (confirm('Are you sure?')) {
+        fetch("api/property/".concat(id), {
+          method: 'delete'
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          alert('Property Removed');
+
+          _this2.fetchProperties();
+        })["catch"](function (err) {
+          return console.log(err);
+        });
+      }
+    },
+    addProperty: function addProperty() {
+      var _this3 = this;
+
+      if (this.edit === false) {
+        // Add
+        fetch('api/property', {
+          method: 'post',
+          body: JSON.stringify(this.property),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          _this3.property.owner_id = '';
+          _this3.property.manager_id = '';
+          _this3.property.address = '';
+          alert('Property Added');
+
+          _this3.fetchProperties();
+        })["catch"](function (err) {
+          return console.log(err);
+        });
+      } else {
+        // Update
+        fetch('api/property', {
+          method: 'put',
+          body: JSON.stringify(this.property),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          _this3.property.owner_id = '';
+          _this3.property.manager_id = '';
+          _this3.property.address = '';
+          alert('Property Updated');
+
+          _this3.fetchProperties();
+        })["catch"](function (err) {
+          return console.log(err);
+        });
+      }
+    },
+    editProperty: function editProperty(property) {
+      this.edit = true;
+      this.property.id = property.id;
+      this.property.property_id = property.id;
+      this.property.owner_id = property.owner_id;
+      this.property.manager_id = property.manager_id;
+      this.property.address = property.address;
+    }
+  },
   mounted: function mounted() {
-    console.log('PROPERTY mounted.');
+    console.log('Properties Component mounted.');
   }
 });
 
@@ -38659,32 +38796,218 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Property Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an PROPERTY component.\n                "
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("h2", [_vm._v("PROPERTIES Component")]),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          staticClass: "mb-3",
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.addProperty($event)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "form-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.property.owner_id,
+                  expression: "property.owner_id"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Title" },
+              domProps: { value: _vm.property.owner_id },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.property, "owner_id", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.property.manager_id,
+                  expression: "property.manager_id"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Body" },
+              domProps: { value: _vm.property.manager_id },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.property, "manager_id", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.property.address,
+                  expression: "property.address"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Body" },
+              domProps: { value: _vm.property.address },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.property, "address", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-light btn-block",
+              attrs: { type: "submit" }
+            },
+            [_vm._v("Save")]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+        _c("ul", { staticClass: "pagination" }, [
+          _c(
+            "li",
+            {
+              staticClass: "page-item",
+              class: [{ disabled: !_vm.pagination.prev_page_url }]
+            },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "page-link",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      return _vm.fetchProperties(_vm.pagination.prev_page_url)
+                    }
+                  }
+                },
+                [_vm._v("Previous")]
               )
-            ])
-          ])
+            ]
+          ),
+          _vm._v(" "),
+          _c("li", { staticClass: "page-item disabled" }, [
+            _c(
+              "a",
+              { staticClass: "page-link text-dark", attrs: { href: "#" } },
+              [
+                _vm._v(
+                  "Page " +
+                    _vm._s(_vm.pagination.current_page) +
+                    " of " +
+                    _vm._s(_vm.pagination.last_page)
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "li",
+            {
+              staticClass: "page-item",
+              class: [{ disabled: !_vm.pagination.next_page_url }]
+            },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "page-link",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      return _vm.fetchProperties(_vm.pagination.next_page_url)
+                    }
+                  }
+                },
+                [_vm._v("Next")]
+              )
+            ]
+          )
         ])
-      ])
-    ])
-  }
-]
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.properties, function(property) {
+        return _c(
+          "div",
+          { key: property.id, staticClass: "card card-body mb-2" },
+          [
+            _c("h3", [_vm._v(_vm._s(property.address))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Owner ID: " + _vm._s(property.owner_id))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Manager ID: " + _vm._s(property.manager_id))]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning mb-2",
+                on: {
+                  click: function($event) {
+                    return _vm.editProperty(property)
+                  }
+                }
+              },
+              [_vm._v("Edit")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                on: {
+                  click: function($event) {
+                    return _vm.deleteProperty(property.id)
+                  }
+                }
+              },
+              [_vm._v("Delete")]
+            )
+          ]
+        )
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 

@@ -65,7 +65,7 @@ class PropertiesController extends Controller
      */
     public function destroy($id)
     {
-        //Get single property
+        //Get single propertyow
         $property = Property::findOrFail($id);
 
         if ($property->delete()) {
