@@ -24,10 +24,12 @@ const Owners = Vue.component('Owner', require('./components/Owners.vue').default
 
 // Object Components
 const Tickets = Vue.component('Ticket', require('./components/Tickets.vue').default);
+const Properties = Vue.component('Property', require('./components/Properties.vue').default);
 
 const routes = [
     { path: '/home', component: Home },
     { path: '/tickets', component: Tickets },
+    { path: '/properties', component: Properties },
     { path: '/tenants', component: Tenants },
     { path: '/managers', component: Managers },
     { path: '/owners', component: Owners },

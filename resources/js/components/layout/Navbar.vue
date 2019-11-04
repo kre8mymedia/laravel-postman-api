@@ -14,6 +14,9 @@
           <router-link class="nav-link" to="/tickets">Tickets</router-link>
         </li>
         <li class="nav-item">
+          <router-link class="nav-link" to="/properties">Properties</router-link>
+        </li>
+        <li class="nav-item">
           <router-link class="nav-link" to="/tenants">Tenants</router-link>
         </li>
         <li class="nav-item">

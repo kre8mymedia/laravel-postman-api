@@ -15,9 +15,9 @@ class PropertiesController extends Controller
      */
     public function index()
     {
-        // Get Tickets
+        // Get properties
         $properties = Property::orderBy('created_at', 'DESC')->paginate(5);
-        // Return tickets as collection
+        // Return properties as collection
         return PropertyResource::collection($properties);
     }
 
@@ -29,7 +29,7 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {
-        // If method is put find article by ticket_id else make new Ticket
+        // If method is put find article by property_id else make new Property
         $property = $request->isMethod('put') ? Property::findOrFail($request->property_id) : new Property;
 
         $property->id = $request->input('property_id');
@@ -50,8 +50,8 @@ class PropertiesController extends Controller
      */
     public function show($id)
     {
-        //Get single ticket
-        $property = Ticket::findOrFail($id);
+        //Get single property
+        $property = Property::findOrFail($id);
 
         //Return single tcket as a reseource
         return new PropertyResource($property);
@@ -65,7 +65,7 @@ class PropertiesController extends Controller
      */
     public function destroy($id)
     {
-        //Get single ticket
+        //Get single property
         $property = Property::findOrFail($id);
 
         if ($property->delete()) {
