@@ -92,3 +92,16 @@ Route::post('tenant', 'TenantsController@store');
 Route::put('tenant', 'TenantsController@store');
 // DELETE Tenant
 Route::delete('tenant/{id}', 'TenantsController@destroy');
+
+// ----------------------------------------------------------------
+
+// LIST Properties
+Route::get('properties', 'PropertiesController@index');
+// SINGLE Property
+Route::get('property/{id}', 'PropertiesController@show');
+// CREATE Property
+Route::post('property', 'PropertiesController@store');
+// UPDATE Property
+Route::put('property', 'PropertiesController@store');
+// DELETE Property
+Route::delete('property/{id}', 'PropertiesController@destroy');
