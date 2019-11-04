@@ -1932,9 +1932,162 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  // Data object to be return with component after render
+  data: function data() {
+    return {
+      managers: [],
+      manager: {
+        id: '',
+        role_id: ''
+      },
+      // roles:[],
+      manager_id: '',
+      pagination: {},
+      edit: false
+    };
+  },
+  created: function created() {
+    this.fetchManagers(); // this.fetchRoles();
+  },
+  methods: {
+    fetchManagers: function fetchManagers(page_url) {
+      var _this = this;
+
+      var vm = this;
+      page_url = page_url || 'api/managers';
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        // Managers log to console
+        console.log(res.data); // this fetches managers data
+
+        _this.managers = res.data; // Get this vue's structure pagination?
+
+        vm.makePagination(res.meta, res.links);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    // fetchRoles(page_url) {
+    //           let vm = this;
+    //           page_url = page_url || 'api/roles'
+    //           fetch(page_url)
+    //           .then(res => res.json())
+    //           .then(res => {
+    //               // Users log to console
+    //               console.log(res.data);
+    //               // this fetches user data
+    //               this.users = res.data;
+    //               // Get this vue's structure pagination?
+    //               vm.makePagination(res.meta, res.links);
+    //           })
+    //           .catch(err => console.log(err));
+    //       },
+    makePagination: function makePagination(meta, links) {
+      var pagination = {
+        current_page: meta.current_page,
+        last_page: meta.last_page,
+        next_page_url: links.next,
+        prev_page_url: links.prev
+      };
+      this.pagination = pagination;
+    },
+    deleteManager: function deleteManager(id) {
+      var _this2 = this;
+
+      if (confirm('Are you sure?')) {
+        fetch("api/manager/".concat(id), {
+          method: 'delete'
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          alert('Manager Removed');
+
+          _this2.fetchManagers();
+        })["catch"](function (err) {
+          return console.log(err);
+        });
+      }
+    },
+    addManager: function addManager() {
+      var _this3 = this;
+
+      if (this.edit === false) {
+        // Add
+        fetch('api/manager', {
+          method: 'post',
+          body: JSON.stringify(this.manager),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          _this3.manager.role_id = '';
+          alert('Manager Added');
+
+          _this3.fetchManagers();
+        })["catch"](function (err) {
+          return console.log(err);
+        });
+      } else {
+        // Update
+        fetch('api/manager', {
+          method: 'put',
+          body: JSON.stringify(this.manager),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          _this3.manager.role_id = '';
+          alert('Manager Updated');
+
+          _this3.fetchManagers();
+        })["catch"](function (err) {
+          return console.log(err);
+        });
+      }
+    },
+    editManager: function editManager(manager) {
+      this.edit = true;
+      this.manager.id = manager.id;
+      this.manager.manager_id = manager.id;
+      this.manager.role_id = manager.role_id;
+    }
+  },
   mounted: function mounted() {
-    console.log('MANAGER mounted.');
+    console.log('MANAGER Component mounted.');
   }
 });
 
@@ -38149,32 +38302,166 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("MANAGER Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("h2", [_vm._v("MANAGER Component")]),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          staticClass: "mb-3",
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.addManager($event)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "form-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.manager.role_id,
+                  expression: "manager.role_id"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Role ID" },
+              domProps: { value: _vm.manager.role_id },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.manager, "role_id", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary btn-block",
+              attrs: { type: "submit" }
+            },
+            [_vm._v("Save")]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+        _c("ul", { staticClass: "pagination" }, [
+          _c(
+            "li",
+            {
+              staticClass: "page-item",
+              class: [{ disabled: !_vm.pagination.prev_page_url }]
+            },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "page-link",
+                  on: {
+                    click: function($event) {
+                      return _vm.fetchManagers(_vm.pagination.prev_page_url)
+                    }
+                  }
+                },
+                [_vm._v("Previous")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("li", { staticClass: "page-item disabled" }, [
+            _c("a", { staticClass: "page-link text-dark" }, [
               _vm._v(
-                "\n                    I'm an MANAGERS component.\n                "
+                "Page " +
+                  _vm._s(_vm.pagination.current_page) +
+                  " of " +
+                  _vm._s(_vm.pagination.last_page)
               )
             ])
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "li",
+            {
+              staticClass: "page-item",
+              class: [{ disabled: !_vm.pagination.next_page_url }]
+            },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "page-link",
+                  on: {
+                    click: function($event) {
+                      return _vm.fetchManagers(_vm.pagination.next_page_url)
+                    }
+                  }
+                },
+                [_vm._v("Next")]
+              )
+            ]
+          )
         ])
-      ])
-    ])
-  }
-]
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.managers, function(manager) {
+        return _c(
+          "div",
+          { key: manager.id, staticClass: "card card-body mb-2" },
+          [
+            _c("h3", [_vm._v("Manager ID: " + _vm._s(manager.id))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Manager Role ID: " + _vm._s(manager.role_id))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Manager Name: " + _vm._s(manager.name))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Manager Email: " + _vm._s(manager.email))]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning mb-2",
+                on: {
+                  click: function($event) {
+                    return _vm.editManager(manager)
+                  }
+                }
+              },
+              [_vm._v("Edit")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                on: {
+                  click: function($event) {
+                    return _vm.deleteManager(manager.id)
+                  }
+                }
+              },
+              [_vm._v("Delete")]
+            )
+          ]
+        )
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
