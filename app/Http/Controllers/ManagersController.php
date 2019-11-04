@@ -66,7 +66,7 @@ class ManagersController extends Controller
         //Delete single manager
         $manager = Manager::findOrFail($id);
 
-        if ($owner->delete()) {
+        if ($manager->delete()) {
             return new ManagerResource($manager);
         }   
     }

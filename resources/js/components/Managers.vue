@@ -2,18 +2,6 @@
    	<div class="container">
      	<h2>MANAGER Component</h2>
 
-		<!-- COMPONENT FORM --> 
-        <form @submit.prevent="addManager" class="mb-3">
-
-			<div class="form-group">
-                <input type="text" class="form-control" placeholder="Role ID" v-model="manager.role_id">
-            </div>
-
-			<!-- submit --> 
-				<button type="submit" class="btn btn-primary btn-block">Save</button>
-		</form>
-		<!-- END COMPONENT FORM -->
-
 		<!-- PAGINATION -->
         <nav aria-label="Page navigation example">
             <ul class="pagination">
@@ -35,10 +23,9 @@
             <p>Manager Name: {{ manager.name }}</p>
             <p>Manager Email: {{ manager.email }}</p>
             <hr>
-            <button @click="editManager(manager)" class="btn btn-warning mb-2">Edit</button>
-            <button @click="deleteManager(manager.id)" class="btn btn-danger">Delete</button>
         </div>
         <!-- END CARDS -->
+        
    </div>
 </template>
 
@@ -109,18 +96,18 @@
 			},
 			
 			deleteManager(id) {
-        if (confirm('Are you sure?')) {
-            fetch(`api/manager/${id}`, {
-                method: 'delete'
-            })
-            .then(res => res.json())
-            .then(data => {
-                alert('Manager Removed')
-                this.fetchManagers();
-            })
-            .catch(err => console.log(err));
-        }
-      },
+                if (confirm('Are you sure?')) {
+                    fetch(`api/manager/${id}`, {
+                        method: 'delete'
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        alert('Manager Removed')
+                        this.fetchManagers();
+                    })
+                    .catch(err => console.log(err));
+                }
+            },
 
             addManager() {
                 if(this.edit === false) {

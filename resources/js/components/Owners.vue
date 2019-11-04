@@ -2,18 +2,6 @@
    	<div class="container">
      	<h2>OWNER Component</h2>
 
-		<!-- COMPONENT FORM --> 
-        <form @submit.prevent="addOwner" class="mb-3">
-
-			<div class="form-group">
-                <input type="text" class="form-control" placeholder="Role ID" v-model="owner.role_id">
-            </div>
-
-			<!-- submit --> 
-				<button type="submit" class="btn btn-primary btn-block">Save</button>
-		</form>
-		<!-- END COMPONENT FORM -->
-
 		<!-- PAGINATION -->
         <nav aria-label="Page navigation example">
             <ul class="pagination">
@@ -35,8 +23,6 @@
 			<p>Owner Name: {{ owner.name }}</p>
 			<p>Owner Email: {{ owner.email }}</p>
             <hr>
-            <button @click="editOwner(owner)" class="btn btn-warning mb-2">Edit</button>
-            <button @click="deleteOwner(owner.id)" class="btn btn-danger">Delete</button>
         </div>
         <!-- END CARDS -->
    </div>

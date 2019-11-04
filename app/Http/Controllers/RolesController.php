@@ -103,6 +103,17 @@ class RolesController extends Controller
         //Delete single role
         $role = Role::findOrFail($id);
 
+        if ($role->name == 'Owner') {
+            $owner = Owner::where('role_id', '=', $role->id)->first();
+            $owner->delete();
+        } elseif ($role->name == 'Tenant') {
+            $tenant = Tenant::where('role_id', '=', $role->id)->first();
+            $tenant->delete();
+        } elseif ($role->name == 'Manager') {
+            $manager = Manager::where('role_id', '=', $role->id)->first();
+            $manager->delete();
+        }
+
         if ($role->delete()) {
             return new RoleResource($role);
         }   

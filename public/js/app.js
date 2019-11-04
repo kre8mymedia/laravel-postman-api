@@ -1947,19 +1947,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   // Data object to be return with component after render
   data: function data() {
@@ -2102,20 +2089,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2537,20 +2510,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   // Data object to be return with component after render
   data: function data() {
@@ -2657,7 +2616,7 @@ __webpack_require__.r(__webpack_exports__);
     editTenant: function editTenant(tenant) {
       this.edit = true;
       this.tenant.id = tenant.id;
-      this.tenant.manager_id = tenant.id;
+      this.tenant.tenant_id = tenant.id;
       this.tenant.role_id = tenant.role_id;
     }
   },
@@ -38481,53 +38440,6 @@ var render = function() {
     [
       _c("h2", [_vm._v("MANAGER Component")]),
       _vm._v(" "),
-      _c(
-        "form",
-        {
-          staticClass: "mb-3",
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.addManager($event)
-            }
-          }
-        },
-        [
-          _c("div", { staticClass: "form-group" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.manager.role_id,
-                  expression: "manager.role_id"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Role ID" },
-              domProps: { value: _vm.manager.role_id },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.manager, "role_id", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary btn-block",
-              attrs: { type: "submit" }
-            },
-            [_vm._v("Save")]
-          )
-        ]
-      ),
-      _vm._v(" "),
       _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
         _c("ul", { staticClass: "pagination" }, [
           _c(
@@ -38600,33 +38512,7 @@ var render = function() {
             _vm._v(" "),
             _c("p", [_vm._v("Manager Email: " + _vm._s(manager.email))]),
             _vm._v(" "),
-            _c("hr"),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-warning mb-2",
-                on: {
-                  click: function($event) {
-                    return _vm.editManager(manager)
-                  }
-                }
-              },
-              [_vm._v("Edit")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-danger",
-                on: {
-                  click: function($event) {
-                    return _vm.deleteManager(manager.id)
-                  }
-                }
-              },
-              [_vm._v("Delete")]
-            )
+            _c("hr")
           ]
         )
       })
@@ -38661,53 +38547,6 @@ var render = function() {
     { staticClass: "container" },
     [
       _c("h2", [_vm._v("OWNER Component")]),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          staticClass: "mb-3",
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.addOwner($event)
-            }
-          }
-        },
-        [
-          _c("div", { staticClass: "form-group" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.owner.role_id,
-                  expression: "owner.role_id"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Role ID" },
-              domProps: { value: _vm.owner.role_id },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.owner, "role_id", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary btn-block",
-              attrs: { type: "submit" }
-            },
-            [_vm._v("Save")]
-          )
-        ]
-      ),
       _vm._v(" "),
       _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
         _c("ul", { staticClass: "pagination" }, [
@@ -38781,33 +38620,7 @@ var render = function() {
             _vm._v(" "),
             _c("p", [_vm._v("Owner Email: " + _vm._s(owner.email))]),
             _vm._v(" "),
-            _c("hr"),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-warning mb-2",
-                on: {
-                  click: function($event) {
-                    return _vm.editOwner(owner)
-                  }
-                }
-              },
-              [_vm._v("Edit")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-danger",
-                on: {
-                  click: function($event) {
-                    return _vm.deleteOwner(owner.id)
-                  }
-                }
-              },
-              [_vm._v("Delete")]
-            )
+            _c("hr")
           ]
         )
       })
@@ -39097,53 +38910,6 @@ var render = function() {
     [
       _c("h2", [_vm._v("TENANT Component")]),
       _vm._v(" "),
-      _c(
-        "form",
-        {
-          staticClass: "mb-3",
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.addTenant($event)
-            }
-          }
-        },
-        [
-          _c("div", { staticClass: "form-group" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.tenant.role_id,
-                  expression: "tenant.role_id"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Role ID" },
-              domProps: { value: _vm.tenant.role_id },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.tenant, "role_id", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary btn-block",
-              attrs: { type: "submit" }
-            },
-            [_vm._v("Save")]
-          )
-        ]
-      ),
-      _vm._v(" "),
       _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
         _c("ul", { staticClass: "pagination" }, [
           _c(
@@ -39216,33 +38982,7 @@ var render = function() {
             _vm._v(" "),
             _c("p", [_vm._v("Tenant Email: " + _vm._s(tenant.email))]),
             _vm._v(" "),
-            _c("hr"),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-warning mb-2",
-                on: {
-                  click: function($event) {
-                    return _vm.fetchTenant(tenant)
-                  }
-                }
-              },
-              [_vm._v("Edit")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-danger",
-                on: {
-                  click: function($event) {
-                    return _vm.fetchTenant(tenant.id)
-                  }
-                }
-              },
-              [_vm._v("Delete")]
-            )
+            _c("hr")
           ]
         )
       })

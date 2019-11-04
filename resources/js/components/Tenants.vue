@@ -2,18 +2,6 @@
    	<div class="container">
      	<h2>TENANT Component</h2>
 
-		<!-- COMPONENT FORM --> 
-        <form @submit.prevent="addTenant" class="mb-3">
-
-			<div class="form-group">
-                <input type="text" class="form-control" placeholder="Role ID" v-model="tenant.role_id">
-            </div>
-
-			<!-- submit --> 
-				<button type="submit" class="btn btn-primary btn-block">Save</button>
-		</form>
-		<!-- END COMPONENT FORM -->
-
 		<!-- PAGINATION -->
         <nav aria-label="Page navigation example">
             <ul class="pagination">
@@ -35,8 +23,6 @@
             <p>Tenant Name: {{ tenant.name }}</p>
             <p>Tenant Email: {{ tenant.email }}</p>
             <hr>
-            <button @click="fetchTenant(tenant)" class="btn btn-warning mb-2">Edit</button>
-            <button @click="fetchTenant(tenant.id)" class="btn btn-danger">Delete</button>
         </div>
         <!-- END CARDS -->
    </div>
@@ -143,7 +129,7 @@
             editTenant(tenant) {
               this.edit = true;
               this.tenant.id = tenant.id;
-              this.tenant.manager_id = tenant.id;
+              this.tenant.tenant_id = tenant.id;
               this.tenant.role_id = tenant.role_id;
             }
 

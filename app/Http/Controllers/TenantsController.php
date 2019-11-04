@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Tenant;
+use App\Role;
 use App\Http\Resources\Tenant as TenantResource;
 
 class TenantsController extends Controller
@@ -65,6 +66,9 @@ class TenantsController extends Controller
     {
         //Delete single tenant
         $tenant = Tenant::findOrFail($id);
+
+        $role = Role::where('id', '=', $tenant->role_id)->first();
+        $role->delete();
 
         if ($tenant->delete()) {
             return new TenantResource($tenant);
