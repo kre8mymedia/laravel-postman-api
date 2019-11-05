@@ -22,8 +22,6 @@ class Tenant extends JsonResource
         $role = Role::find($this->role_id);
         // User this Tenant belongs to
         $user = User::findOrFail($role->user_id);
-
-        return $user;
         
         return [
             'id' => $this->id,

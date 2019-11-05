@@ -1,18 +1,30 @@
 <template>
     <div class="container">
         <h2>PROPERTIES Component</h2>
-        <form @submit.prevent="addProperty" class="mb-3">
+        <form @submit.prevent="addProperty" class="mb-3" enctype="multipart/form-data">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Title" v-model="property.owner_id">
+                <input type="text" class="form-control" placeholder="Owner ID" v-model="property.owner_id">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Body" v-model="property.manager_id">
+                <input type="text" class="form-control" placeholder="Manager ID" v-model="property.manager_id">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Body" v-model="property.address">
+                <input type="text" class="form-control" placeholder="Address" v-model="property.address">
             </div>
+			<form>
+			<div class="form-group">
+				<label>EXAMPLE 1 file input</label>
+				<input type="file" @change="onFileSelected" name="property_image" class="form-control-file">
+                <!-- <button @click="onUpload">Upload</button> -->
+			</div>
+
+            <!-- <div class="form-group">
+				<label for="exampleFormControlFile1">Example file input</label>
+				<input type="file" class="form-control-file" name="property_image" id="property_image">
+			</div> -->
+			</form>
             
-            <button type="submit" class="btn btn-light btn-block">Save</button>
+            <button type="submit" class="btn btn-success btn-block">Save</button>
         </form>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
@@ -30,7 +42,9 @@
         <div class="card card-body mb-2" v-for="property in properties" v-bind:key="property.id">
             <h3>{{ property.address }}</h3>
             <p>Owner ID: {{ property.owner_id }}</p>
+            <p>Owner User: {{ property.owner_user }}</p>
             <p>Manager ID: {{ property.manager_id }}</p>
+            <p>Manager User: {{ property.manager_user }}</p>
             <hr>
             <button @click="editProperty(property)" class="btn btn-warning mb-2">Edit</button>
             <button @click="deleteProperty(property.id)" class="btn btn-danger">Delete</button>
@@ -39,6 +53,7 @@
 </template>
 
 <script>
+
     export default {
         data() {
             return {
@@ -47,8 +62,10 @@
                     id: '',
                     owner_id: '',
                     manager_id: '',
-                    address: ''
+                    address: '',
+                    property_image: ''
                 },
+                selectedFile: null,
                 property_id: '',
                 pagination: {},
                 edit: false
@@ -60,6 +77,11 @@
         },
 
         methods: {
+            onFileSelected(event) {
+                this.selectedFile = event.target.files[0]
+                console.log(this.selectedFile);
+            },
+
             fetchProperties(page_url) {
                 let vm = this;
                 page_url = page_url || 'api/properties'
@@ -105,7 +127,10 @@
                         method: 'post',
                         body: JSON.stringify(this.property),
                         headers: {
-                            'content-type': 'application/json'
+                            'content-type': [
+                                'multipart/form-data',
+                                'application/json'
+                            ]
                         }
                     })
                     .then(res => res.json())
@@ -113,6 +138,7 @@
                         this.property.owner_id = '';
                         this.property.manager_id = '';
                         this.property.address = '';
+                        this.property.property_image ='';
                         alert('Property Added');
                         this.fetchProperties();
                     })
@@ -131,6 +157,7 @@
                         this.property.owner_id = '';
                         this.property.manager_id = '';
                         this.property.address = '';
+                        this.property.property_image ='';
                         alert('Property Updated');
                         this.fetchProperties();
                     })
@@ -144,7 +171,8 @@
                 this.property.property_id = property.id;
                 this.property.owner_id = property.owner_id;
 				this.property.manager_id = property.manager_id;
-				this.property.address = property.address;
+                this.property.address = property.address;
+                this.property.property_image = property.property_image;
             }
         },
 

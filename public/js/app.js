@@ -2305,6 +2305,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2313,8 +2327,10 @@ __webpack_require__.r(__webpack_exports__);
         id: '',
         owner_id: '',
         manager_id: '',
-        address: ''
+        address: '',
+        property_image: ''
       },
+      selectedFile: null,
       property_id: '',
       pagination: {},
       edit: false
@@ -2324,6 +2340,10 @@ __webpack_require__.r(__webpack_exports__);
     this.fetchProperties();
   },
   methods: {
+    onFileSelected: function onFileSelected(event) {
+      this.selectedFile = event.target.files[0];
+      console.log(this.selectedFile);
+    },
     fetchProperties: function fetchProperties(page_url) {
       var _this = this;
 
@@ -2374,7 +2394,7 @@ __webpack_require__.r(__webpack_exports__);
           method: 'post',
           body: JSON.stringify(this.property),
           headers: {
-            'content-type': 'application/json'
+            'content-type': ['multipart/form-data', 'application/json']
           }
         }).then(function (res) {
           return res.json();
@@ -2382,6 +2402,7 @@ __webpack_require__.r(__webpack_exports__);
           _this3.property.owner_id = '';
           _this3.property.manager_id = '';
           _this3.property.address = '';
+          _this3.property.property_image = '';
           alert('Property Added');
 
           _this3.fetchProperties();
@@ -2402,6 +2423,7 @@ __webpack_require__.r(__webpack_exports__);
           _this3.property.owner_id = '';
           _this3.property.manager_id = '';
           _this3.property.address = '';
+          _this3.property.property_image = '';
           alert('Property Updated');
 
           _this3.fetchProperties();
@@ -2417,6 +2439,7 @@ __webpack_require__.r(__webpack_exports__);
       this.property.owner_id = property.owner_id;
       this.property.manager_id = property.manager_id;
       this.property.address = property.address;
+      this.property.property_image = property.property_image;
     }
   },
   mounted: function mounted() {
@@ -38806,6 +38829,7 @@ var render = function() {
         "form",
         {
           staticClass: "mb-3",
+          attrs: { enctype: "multipart/form-data" },
           on: {
             submit: function($event) {
               $event.preventDefault()
@@ -38825,7 +38849,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Title" },
+              attrs: { type: "text", placeholder: "Owner ID" },
               domProps: { value: _vm.property.owner_id },
               on: {
                 input: function($event) {
@@ -38849,7 +38873,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Body" },
+              attrs: { type: "text", placeholder: "Manager ID" },
               domProps: { value: _vm.property.manager_id },
               on: {
                 input: function($event) {
@@ -38873,7 +38897,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Body" },
+              attrs: { type: "text", placeholder: "Address" },
               domProps: { value: _vm.property.address },
               on: {
                 input: function($event) {
@@ -38886,10 +38910,22 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
+          _c("form", [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("EXAMPLE 1 file input")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control-file",
+                attrs: { type: "file", name: "property_image" },
+                on: { change: _vm.onFileSelected }
+              })
+            ])
+          ]),
+          _vm._v(" "),
           _c(
             "button",
             {
-              staticClass: "btn btn-light btn-block",
+              staticClass: "btn btn-success btn-block",
               attrs: { type: "submit" }
             },
             [_vm._v("Save")]
@@ -38971,7 +39007,11 @@ var render = function() {
             _vm._v(" "),
             _c("p", [_vm._v("Owner ID: " + _vm._s(property.owner_id))]),
             _vm._v(" "),
+            _c("p", [_vm._v("Owner User: " + _vm._s(property.owner_user))]),
+            _vm._v(" "),
             _c("p", [_vm._v("Manager ID: " + _vm._s(property.manager_id))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Manager User: " + _vm._s(property.manager_user))]),
             _vm._v(" "),
             _c("hr"),
             _vm._v(" "),
