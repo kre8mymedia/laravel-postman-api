@@ -1,9 +1,8 @@
 <template>
    	<div class="container">
-     	<h2>OWNER Component</h2>
 
 		<!-- PAGINATION -->
-        <nav aria-label="Page navigation example">
+        <nav class="mt-3" aria-label="Page navigation example">
             <ul class="pagination">
                 <li v-bind:class="[{ disabled: !pagination.prev_page_url }]" class="page-item">
                     <a @click="fetchOwners(pagination.prev_page_url)" class="page-link">Previous</a>
@@ -16,15 +15,20 @@
         </nav>
         <!-- END PAGINATION -->
 
-        <!-- CARDS -->
-        <div class="card card-body mb-2" v-for="owner in owners" v-bind:key="owner.id">
-            <h3>Owner ID: {{ owner.id }}</h3>
-            <p>Owner Role ID: {{ owner.role_id }}</p>
-			<p>Owner Name: {{ owner.name }}</p>
-			<p>Owner Email: {{ owner.email }}</p>
-            <hr>
-        </div>
-        <!-- END CARDS -->
+        <!-- MANAGERS TABLE -->
+        <table class="table table-hover">
+            <thead>
+                <tr class='text-center'>
+                    <th scope="col">ID</th><th scope="col">Role ID</th><th scope="col">Name</th><th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="owner in owners" v-bind:key="owner.id" class='text-center'>
+                    <th scope="row">{{ owner.id }}</th><td>{{ owner.role_id }}</td><td>{{ owner.name }}</td><td>{{ owner.email }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- END MANAGERS TABLE -->
    </div>
 </template>
 

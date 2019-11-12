@@ -19,9 +19,9 @@ class Manager extends JsonResource
         // return parent::toArray($request);
 
         // Role this Manager belongs to
-        $role = Role::find($this->role_id);
+        $role = Role::findOrFail($this->role_id);
         // User this Manager belongs to
-        $user = User::find($role->user_id);
+        $user = User::findOrFail($role->user_id);
 
         return [
             'id' => $this->id,

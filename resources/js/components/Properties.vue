@@ -1,31 +1,43 @@
 <template>
     <div class="container">
         <h2>PROPERTIES Component</h2>
-        <form @submit.prevent="addProperty" class="mb-3" enctype="multipart/form-data">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Owner ID" v-model="property.owner_id">
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Manager ID" v-model="property.manager_id">
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Address" v-model="property.address">
-            </div>
-			<form>
-			<div class="form-group">
-				<label>EXAMPLE 1 file input</label>
-				<input type="file" @change="onFileSelected" name="property_image" class="form-control-file">
-                <!-- <button @click="onUpload">Upload</button> -->
-			</div>
 
-            <!-- <div class="form-group">
-				<label for="exampleFormControlFile1">Example file input</label>
-				<input type="file" class="form-control-file" name="property_image" id="property_image">
-			</div> -->
-			</form>
-            
+        <!-- FORM -->
+        <form @submit.prevent="addProperty" class="mb-3" enctype="multipart/form-data">
+
+            <!-- OWNER ID --> 
+            <div class="form-group">
+                <select v-model="property.owner_id" class="form-control" id="exampleFormControlSelect2">
+                    <option disabled value="">Select a Owner</option>
+                    <option v-for="owner in owners" :key="owner.id" :value="owner.id" >
+                        {{owner.name}}
+                    </option>
+                </select>
+            </div>
+            <!-- END OWNER ID -->
+
+            <!-- Manager ID --> 
+            <div class="form-group">
+                <select v-model="property.manager_id" class="form-control" id="exampleFormControlSelect2">
+                    <option disabled value="">Select a Manager</option>
+                    <option v-for="manager in managers" :key="manager.id" :value="manager.id" >
+                        {{manager.name}}
+                    </option>
+                </select>
+            </div>
+            <!-- END Manager ID -->
+
+            <div class="form-group">
+                <input type="text" class="form-control" name="address" placeholder="Address" v-model="property.address">
+            </div>
+            <!-- <div class="input-group mb-3">
+                <input type="file" name="image" @change="onFileSelected">
+            </div> -->
             <button type="submit" class="btn btn-success btn-block">Save</button>
         </form>
+        <!-- END FORM -->
+
+        <!-- PAGINATION -->
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li v-bind:class="[{ disabled: !pagination.prev_page_url }]" class="page-item">
@@ -39,20 +51,30 @@
                 </li>
             </ul>
         </nav>
+        <!-- END PAGINATION -->
+
+        <!-- LIST OF ITEMS -->
         <div class="card card-body mb-2" v-for="property in properties" v-bind:key="property.id">
-            <h3>{{ property.address }}</h3>
-            <p>Owner ID: {{ property.owner_id }}</p>
-            <p>Owner User: {{ property.owner_user }}</p>
-            <p>Manager ID: {{ property.manager_id }}</p>
-            <p>Manager User: {{ property.manager_user }}</p>
+            <h3><a target="_blank" v-bind:href="`https://google.com/search?q=` + property.address">{{ property.address }}</a></h3>
+            <p>Property Owner: {{ property.owner_user }}</p>
+            <p>Property Manager: {{ property.manager_user }}</p>
+            <!-- <div class="col-md-3" v-if="image">
+                <img :src="image" class="img-responsive" height="70" width="90">
+            </div> -->
+
             <hr>
             <button @click="editProperty(property)" class="btn btn-warning mb-2">Edit</button>
             <button @click="deleteProperty(property.id)" class="btn btn-danger">Delete</button>
         </div>
+        <!-- END LIST OF ITEMS -->
+
     </div>
 </template>
 
 <script>
+    import axios from 'axios';
+
+    import Tenants from './Tenants.vue';
 
     export default {
         data() {
@@ -63,7 +85,23 @@
                     owner_id: '',
                     manager_id: '',
                     address: '',
-                    property_image: ''
+                    image: ''
+                },
+                owners: [],
+                owner: {
+                    "id": '',
+                    "role_id": '',
+                    "user_id": '',
+                    "name": "",
+                    "email": ""
+                },
+                managers: [],
+                manager: {
+                    "id": '',
+                    "role_id": '',
+                    "user_id": '',
+                    "name": "",
+                    "email": ""
                 },
                 selectedFile: null,
                 property_id: '',
@@ -72,16 +110,17 @@
             }
         },
 
+        components: {
+            Tenants
+        },
+
         created() {
             this.fetchProperties();
+            this.fetchOwners();
+            this.fetchManagers();
         },
 
         methods: {
-            onFileSelected(event) {
-                this.selectedFile = event.target.files[0]
-                console.log(this.selectedFile);
-            },
-
             fetchProperties(page_url) {
                 let vm = this;
                 page_url = page_url || 'api/properties'
@@ -90,6 +129,38 @@
                 .then(res => {
                     // console.log(res.data);
                     this.properties = res.data;
+                    vm.makePagination(res.meta, res.links);
+                })
+                .catch(err => console.log(err));
+            },
+
+            fetchOwners(page_url) {
+                let vm = this;
+                page_url = page_url || 'api/owners'
+                fetch(page_url)
+                .then(res => res.json())
+                .then(res => {
+                    // Users log to console
+                    console.log(res.data);
+                    // this fetches user data
+                    this.owners = res.data;
+                    // Get this vue's structure pagination?
+                    vm.makePagination(res.meta, res.links);
+                })
+                .catch(err => console.log(err));
+            },
+
+            fetchManagers(page_url) {
+                let vm = this;
+                page_url = page_url || 'api/managers'
+                fetch(page_url)
+                .then(res => res.json())
+                .then(res => {
+                    // Users log to console
+                    console.log(res.data);
+                    // this fetches user data
+                    this.managers = res.data;
+                    // Get this vue's structure pagination?
                     vm.makePagination(res.meta, res.links);
                 })
                 .catch(err => console.log(err));
@@ -121,16 +192,13 @@
             },
 
             addProperty() {
+                // If edit prop is equal to false ADD PROPERTY else.. UPDATE
                 if(this.edit === false) {
-                    // Add
                     fetch('api/property', {
                         method: 'post',
-                        body: JSON.stringify(this.property),
+                        body:JSON.stringify(this.property),
                         headers: {
-                            'content-type': [
-                                'multipart/form-data',
-                                'application/json'
-                            ]
+                            'content-type': 'application/json'
                         }
                     })
                     .then(res => res.json())
@@ -138,7 +206,7 @@
                         this.property.owner_id = '';
                         this.property.manager_id = '';
                         this.property.address = '';
-                        this.property.property_image ='';
+                        this.property.image = '';
                         alert('Property Added');
                         this.fetchProperties();
                     })
@@ -157,7 +225,7 @@
                         this.property.owner_id = '';
                         this.property.manager_id = '';
                         this.property.address = '';
-                        this.property.property_image ='';
+                        this.property.image = '';
                         alert('Property Updated');
                         this.fetchProperties();
                     })
@@ -172,7 +240,7 @@
                 this.property.owner_id = property.owner_id;
 				this.property.manager_id = property.manager_id;
                 this.property.address = property.address;
-                this.property.property_image = property.property_image;
+                this.property.image = property.image;
             }
         },
 

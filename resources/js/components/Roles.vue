@@ -30,7 +30,7 @@
         <!-- END COMPONENT FORM -->
 
         <!-- PAGINATION -->
-        <nav aria-label="Page navigation example">
+        <!-- <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li v-bind:class="[{ disabled: !pagination.prev_page_url }]" class="page-item">
                     <a @click="fetchRoles(pagination.prev_page_url)" class="page-link">Previous</a>
@@ -40,22 +40,25 @@
                     <a @click="fetchRoles(pagination.next_page_url)" class="page-link">Next</a>
                 </li>
             </ul>
-        </nav>
+        </nav> -->
         <!-- END PAGINATION -->
-
-        <!-- CARDS -->
-        <div class="card card-body mb-2" v-for="role in roles" v-bind:key="role.id">
+        
+         <div class="card card-body mb-2" v-for="role in roles" v-bind:key="role.id">
             <h3>{{ role.name }}</h3>
-            <p>{{ role.user_name + " | " + role.user_email}}</p>
+            <!-- <p>id: {{ role.id }}</p> -->
+            <p>username: {{ role.user_name }}</p>
+            <p>email: {{ role.user_email }}</p>
             <hr>
-            <button @click="deleteRole(role.id)" class="btn btn-danger">Delete</button>
+            <button @click="deleteTicket(ticket.id)" class="btn btn-danger">Delete</button>
         </div>
-        <!-- END CARDS -->
-
+        
     </div>
 </template>
 
 <script>
+    // import ExampleComponent from './ExampleComponent'
+    import Owner from './Owners'
+
     export default {
         data() {
             return {
@@ -75,6 +78,10 @@
                 pagination: {},
                 edit: false,
             }
+        },
+
+        components: {
+            Owner
         },
 
         created() {

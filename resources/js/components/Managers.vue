@@ -1,9 +1,8 @@
 <template>
    	<div class="container">
-     	<h2>MANAGER Component</h2>
 
 		<!-- PAGINATION -->
-        <nav aria-label="Page navigation example">
+        <nav class="mt-3" aria-label="Page navigation example">
             <ul class="pagination">
                 <li v-bind:class="[{ disabled: !pagination.prev_page_url }]" class="page-item">
                     <a @click="fetchManagers(pagination.prev_page_url)" class="page-link">Previous</a>
@@ -16,15 +15,20 @@
         </nav>
         <!-- END PAGINATION -->
 
-        <!-- CARDS -->
-        <div class="card card-body mb-2" v-for="manager in managers" v-bind:key="manager.id">
-            <h3>Manager ID: {{ manager.id }}</h3>
-            <p>Manager Role ID: {{ manager.role_id }}</p>
-            <p>Manager Name: {{ manager.name }}</p>
-            <p>Manager Email: {{ manager.email }}</p>
-            <hr>
-        </div>
-        <!-- END CARDS -->
+        <!-- MANAGERS TABLE -->
+        <table class="table table-hover">
+            <thead>
+                <tr class='text-center'>
+                    <th scope="col">ID</th><th scope="col">Role ID</th><th scope="col">Name</th><th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="manager in managers" v-bind:key="manager.id" class='text-center'>
+                    <th scope="row">{{ manager.id }}</th><td>{{ manager.role_id }}</td><td>{{ manager.name }}</td><td>{{ manager.email }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- END MANAGERS TABLE -->
         
    </div>
 </template>

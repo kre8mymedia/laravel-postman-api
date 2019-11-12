@@ -18,7 +18,7 @@ class CreatePropertiesTable extends Migration
             $table->bigInteger('owner_id')->unsigned()->index();
             $table->bigInteger('manager_id')->unsigned()->index()->nullable();
             $table->string('address');
-            $table->string('property_image')->nullable();;
+            $table->string('image')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

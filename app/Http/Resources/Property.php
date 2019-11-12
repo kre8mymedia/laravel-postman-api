@@ -33,7 +33,7 @@ class Property extends JsonResource
             'manager_id' => $this->manager_id,
             'manager_user' => $manager_user->name,
             'address' => $this->address,
-            'property_image' => $this->property_image
+            'image' => $this->image
         ];
     }
 }

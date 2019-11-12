@@ -20,7 +20,7 @@ class Role extends JsonResource
         // return parent::toArray($request);
 
         // Find user by there role.user.id
-        $user = User::find($this->user_id);
+        $user = User::findOrFail($this->user_id);
 
         return [
             'id' => $this->id,

@@ -1883,6 +1883,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Owners_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Owners.vue */ "./resources/js/components/Owners.vue");
+/* harmony import */ var _Managers_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Managers.vue */ "./resources/js/components/Managers.vue");
+/* harmony import */ var _Tenants_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Tenants.vue */ "./resources/js/components/Tenants.vue");
 //
 //
 //
@@ -1899,7 +1902,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      message: {
+        owner: "Owner Component",
+        manager: "Manager Component",
+        tenant: "Tenant Component"
+      }
+    };
+  },
   mounted: function mounted() {
     console.log('Example Component mounted.');
   }
@@ -1916,6 +1938,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -2119,6 +2145,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   // Data object to be return with component after render
   data: function data() {
@@ -2265,6 +2295,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Tenants_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Tenants.vue */ "./resources/js/components/Tenants.vue");
 //
 //
 //
@@ -2319,6 +2352,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2328,7 +2382,23 @@ __webpack_require__.r(__webpack_exports__);
         owner_id: '',
         manager_id: '',
         address: '',
-        property_image: ''
+        image: ''
+      },
+      owners: [],
+      owner: {
+        "id": '',
+        "role_id": '',
+        "user_id": '',
+        "name": "",
+        "email": ""
+      },
+      managers: [],
+      manager: {
+        "id": '',
+        "role_id": '',
+        "user_id": '',
+        "name": "",
+        "email": ""
       },
       selectedFile: null,
       property_id: '',
@@ -2336,14 +2406,15 @@ __webpack_require__.r(__webpack_exports__);
       edit: false
     };
   },
+  components: {
+    Tenants: _Tenants_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   created: function created() {
     this.fetchProperties();
+    this.fetchOwners();
+    this.fetchManagers();
   },
   methods: {
-    onFileSelected: function onFileSelected(event) {
-      this.selectedFile = event.target.files[0];
-      console.log(this.selectedFile);
-    },
     fetchProperties: function fetchProperties(page_url) {
       var _this = this;
 
@@ -2359,6 +2430,42 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(err);
       });
     },
+    fetchOwners: function fetchOwners(page_url) {
+      var _this2 = this;
+
+      var vm = this;
+      page_url = page_url || 'api/owners';
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        // Users log to console
+        console.log(res.data); // this fetches user data
+
+        _this2.owners = res.data; // Get this vue's structure pagination?
+
+        vm.makePagination(res.meta, res.links);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    fetchManagers: function fetchManagers(page_url) {
+      var _this3 = this;
+
+      var vm = this;
+      page_url = page_url || 'api/managers';
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        // Users log to console
+        console.log(res.data); // this fetches user data
+
+        _this3.managers = res.data; // Get this vue's structure pagination?
+
+        vm.makePagination(res.meta, res.links);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
     makePagination: function makePagination(meta, links) {
       var pagination = {
         current_page: meta.current_page,
@@ -2369,7 +2476,7 @@ __webpack_require__.r(__webpack_exports__);
       this.pagination = pagination;
     },
     deleteProperty: function deleteProperty(id) {
-      var _this2 = this;
+      var _this4 = this;
 
       if (confirm('Are you sure?')) {
         fetch("api/property/".concat(id), {
@@ -2379,33 +2486,33 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (data) {
           alert('Property Removed');
 
-          _this2.fetchProperties();
+          _this4.fetchProperties();
         })["catch"](function (err) {
           return console.log(err);
         });
       }
     },
     addProperty: function addProperty() {
-      var _this3 = this;
+      var _this5 = this;
 
+      // If edit prop is equal to false ADD PROPERTY else.. UPDATE
       if (this.edit === false) {
-        // Add
         fetch('api/property', {
           method: 'post',
           body: JSON.stringify(this.property),
           headers: {
-            'content-type': ['multipart/form-data', 'application/json']
+            'content-type': 'application/json'
           }
         }).then(function (res) {
           return res.json();
         }).then(function (data) {
-          _this3.property.owner_id = '';
-          _this3.property.manager_id = '';
-          _this3.property.address = '';
-          _this3.property.property_image = '';
+          _this5.property.owner_id = '';
+          _this5.property.manager_id = '';
+          _this5.property.address = '';
+          _this5.property.image = '';
           alert('Property Added');
 
-          _this3.fetchProperties();
+          _this5.fetchProperties();
         })["catch"](function (err) {
           return console.log(err);
         });
@@ -2420,13 +2527,13 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (res) {
           return res.json();
         }).then(function (data) {
-          _this3.property.owner_id = '';
-          _this3.property.manager_id = '';
-          _this3.property.address = '';
-          _this3.property.property_image = '';
+          _this5.property.owner_id = '';
+          _this5.property.manager_id = '';
+          _this5.property.address = '';
+          _this5.property.image = '';
           alert('Property Updated');
 
-          _this3.fetchProperties();
+          _this5.fetchProperties();
         })["catch"](function (err) {
           return console.log(err);
         });
@@ -2439,7 +2546,7 @@ __webpack_require__.r(__webpack_exports__);
       this.property.owner_id = property.owner_id;
       this.property.manager_id = property.manager_id;
       this.property.address = property.address;
-      this.property.property_image = property.property_image;
+      this.property.image = property.image;
     }
   },
   mounted: function mounted() {
@@ -2458,6 +2565,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Owners__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Owners */ "./resources/js/components/Owners.vue");
 //
 //
 //
@@ -2515,6 +2623,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+// import ExampleComponent from './ExampleComponent'
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2534,6 +2644,9 @@ __webpack_require__.r(__webpack_exports__);
       pagination: {},
       edit: false
     };
+  },
+  components: {
+    Owner: _Owners__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   created: function created() {
     this.fetchRoles();
@@ -2646,6 +2759,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -38556,32 +38673,52 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
+  return _c("div", [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c(
+          "div",
+          { staticClass: "card mb-3" },
+          [
             _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
+              _vm._v(_vm._s(_vm.message.owner))
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
+            _c("Owner")
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card mb-3" },
+          [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v(_vm._s(_vm.message.manager))
+            ]),
+            _vm._v(" "),
+            _c("Manager")
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card mb-3" },
+          [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v(_vm._s(_vm.message.tenant))
+            ]),
+            _vm._v(" "),
+            _c("Tenant")
+          ],
+          1
+        )
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -38603,13 +38740,14 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("h2", [_vm._v("MANAGER Component")]),
-      _vm._v(" "),
-      _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "nav",
+      {
+        staticClass: "mt-3",
+        attrs: { "aria-label": "Page navigation example" }
+      },
+      [
         _c("ul", { staticClass: "pagination" }, [
           _c(
             "li",
@@ -38666,30 +38804,42 @@ var render = function() {
             ]
           )
         ])
-      ]),
+      ]
+    ),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-hover" }, [
+      _vm._m(0),
       _vm._v(" "),
-      _vm._l(_vm.managers, function(manager) {
-        return _c(
-          "div",
-          { key: manager.id, staticClass: "card card-body mb-2" },
-          [
-            _c("h3", [_vm._v("Manager ID: " + _vm._s(manager.id))]),
-            _vm._v(" "),
-            _c("p", [_vm._v("Manager Role ID: " + _vm._s(manager.role_id))]),
-            _vm._v(" "),
-            _c("p", [_vm._v("Manager Name: " + _vm._s(manager.name))]),
-            _vm._v(" "),
-            _c("p", [_vm._v("Manager Email: " + _vm._s(manager.email))]),
-            _vm._v(" "),
-            _c("hr")
-          ]
-        )
-      })
-    ],
-    2
-  )
+      _c(
+        "tbody",
+        _vm._l(_vm.managers, function(manager) {
+          return _c("tr", { key: manager.id, staticClass: "text-center" }, [
+            _c("th", { attrs: { scope: "row" } }, [_vm._v(_vm._s(manager.id))]),
+            _c("td", [_vm._v(_vm._s(manager.role_id))]),
+            _c("td", [_vm._v(_vm._s(manager.name))]),
+            _c("td", [_vm._v(_vm._s(manager.email))])
+          ])
+        }),
+        0
+      )
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "text-center" }, [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("ID")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Role ID")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Email")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -38711,13 +38861,14 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("h2", [_vm._v("OWNER Component")]),
-      _vm._v(" "),
-      _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "nav",
+      {
+        staticClass: "mt-3",
+        attrs: { "aria-label": "Page navigation example" }
+      },
+      [
         _c("ul", { staticClass: "pagination" }, [
           _c(
             "li",
@@ -38774,30 +38925,42 @@ var render = function() {
             ]
           )
         ])
-      ]),
+      ]
+    ),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-hover" }, [
+      _vm._m(0),
       _vm._v(" "),
-      _vm._l(_vm.owners, function(owner) {
-        return _c(
-          "div",
-          { key: owner.id, staticClass: "card card-body mb-2" },
-          [
-            _c("h3", [_vm._v("Owner ID: " + _vm._s(owner.id))]),
-            _vm._v(" "),
-            _c("p", [_vm._v("Owner Role ID: " + _vm._s(owner.role_id))]),
-            _vm._v(" "),
-            _c("p", [_vm._v("Owner Name: " + _vm._s(owner.name))]),
-            _vm._v(" "),
-            _c("p", [_vm._v("Owner Email: " + _vm._s(owner.email))]),
-            _vm._v(" "),
-            _c("hr")
-          ]
-        )
-      })
-    ],
-    2
-  )
+      _c(
+        "tbody",
+        _vm._l(_vm.owners, function(owner) {
+          return _c("tr", { key: owner.id, staticClass: "text-center" }, [
+            _c("th", { attrs: { scope: "row" } }, [_vm._v(_vm._s(owner.id))]),
+            _c("td", [_vm._v(_vm._s(owner.role_id))]),
+            _c("td", [_vm._v(_vm._s(owner.name))]),
+            _c("td", [_vm._v(_vm._s(owner.email))])
+          ])
+        }),
+        0
+      )
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "text-center" }, [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("ID")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Role ID")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Email")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -38839,51 +39002,113 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "form-group" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.property.owner_id,
-                  expression: "property.owner_id"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Owner ID" },
-              domProps: { value: _vm.property.owner_id },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.property.owner_id,
+                    expression: "property.owner_id"
                   }
-                  _vm.$set(_vm.property, "owner_id", $event.target.value)
+                ],
+                staticClass: "form-control",
+                attrs: { id: "exampleFormControlSelect2" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.property,
+                      "owner_id",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
                 }
-              }
-            })
+              },
+              [
+                _c("option", { attrs: { disabled: "", value: "" } }, [
+                  _vm._v("Select a Owner")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.owners, function(owner) {
+                  return _c(
+                    "option",
+                    { key: owner.id, domProps: { value: owner.id } },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(owner.name) +
+                          "\n                "
+                      )
+                    ]
+                  )
+                })
+              ],
+              2
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.property.manager_id,
-                  expression: "property.manager_id"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Manager ID" },
-              domProps: { value: _vm.property.manager_id },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.property.manager_id,
+                    expression: "property.manager_id"
                   }
-                  _vm.$set(_vm.property, "manager_id", $event.target.value)
+                ],
+                staticClass: "form-control",
+                attrs: { id: "exampleFormControlSelect2" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.property,
+                      "manager_id",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
                 }
-              }
-            })
+              },
+              [
+                _c("option", { attrs: { disabled: "", value: "" } }, [
+                  _vm._v("Select a Manager")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.managers, function(manager) {
+                  return _c(
+                    "option",
+                    { key: manager.id, domProps: { value: manager.id } },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(manager.name) +
+                          "\n                "
+                      )
+                    ]
+                  )
+                })
+              ],
+              2
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
@@ -38897,7 +39122,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Address" },
+              attrs: { type: "text", name: "address", placeholder: "Address" },
               domProps: { value: _vm.property.address },
               on: {
                 input: function($event) {
@@ -38908,18 +39133,6 @@ var render = function() {
                 }
               }
             })
-          ]),
-          _vm._v(" "),
-          _c("form", [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("EXAMPLE 1 file input")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control-file",
-                attrs: { type: "file", name: "property_image" },
-                on: { change: _vm.onFileSelected }
-              })
-            ])
           ]),
           _vm._v(" "),
           _c(
@@ -39003,15 +39216,24 @@ var render = function() {
           "div",
           { key: property.id, staticClass: "card card-body mb-2" },
           [
-            _c("h3", [_vm._v(_vm._s(property.address))]),
+            _c("h3", [
+              _c(
+                "a",
+                {
+                  attrs: {
+                    target: "_blank",
+                    href: "https://google.com/search?q=" + property.address
+                  }
+                },
+                [_vm._v(_vm._s(property.address))]
+              )
+            ]),
             _vm._v(" "),
-            _c("p", [_vm._v("Owner ID: " + _vm._s(property.owner_id))]),
+            _c("p", [_vm._v("Property Owner: " + _vm._s(property.owner_user))]),
             _vm._v(" "),
-            _c("p", [_vm._v("Owner User: " + _vm._s(property.owner_user))]),
-            _vm._v(" "),
-            _c("p", [_vm._v("Manager ID: " + _vm._s(property.manager_id))]),
-            _vm._v(" "),
-            _c("p", [_vm._v("Manager User: " + _vm._s(property.manager_user))]),
+            _c("p", [
+              _vm._v("Property Manager: " + _vm._s(property.manager_user))
+            ]),
             _vm._v(" "),
             _c("hr"),
             _vm._v(" "),
@@ -39203,70 +39425,13 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
-        _c("ul", { staticClass: "pagination" }, [
-          _c(
-            "li",
-            {
-              staticClass: "page-item",
-              class: [{ disabled: !_vm.pagination.prev_page_url }]
-            },
-            [
-              _c(
-                "a",
-                {
-                  staticClass: "page-link",
-                  on: {
-                    click: function($event) {
-                      return _vm.fetchRoles(_vm.pagination.prev_page_url)
-                    }
-                  }
-                },
-                [_vm._v("Previous")]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item disabled" }, [
-            _c("a", { staticClass: "page-link text-dark" }, [
-              _vm._v(
-                "Page " +
-                  _vm._s(_vm.pagination.current_page) +
-                  " of " +
-                  _vm._s(_vm.pagination.last_page)
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "li",
-            {
-              staticClass: "page-item",
-              class: [{ disabled: !_vm.pagination.next_page_url }]
-            },
-            [
-              _c(
-                "a",
-                {
-                  staticClass: "page-link",
-                  on: {
-                    click: function($event) {
-                      return _vm.fetchRoles(_vm.pagination.next_page_url)
-                    }
-                  }
-                },
-                [_vm._v("Next")]
-              )
-            ]
-          )
-        ])
-      ]),
-      _vm._v(" "),
       _vm._l(_vm.roles, function(role) {
         return _c("div", { key: role.id, staticClass: "card card-body mb-2" }, [
           _c("h3", [_vm._v(_vm._s(role.name))]),
           _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(role.user_name + " | " + role.user_email))]),
+          _c("p", [_vm._v("username: " + _vm._s(role.user_name))]),
+          _vm._v(" "),
+          _c("p", [_vm._v("email: " + _vm._s(role.user_email))]),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
@@ -39276,7 +39441,7 @@ var render = function() {
               staticClass: "btn btn-danger",
               on: {
                 click: function($event) {
-                  return _vm.deleteRole(role.id)
+                  return _vm.deleteTicket(_vm.ticket.id)
                 }
               }
             },
@@ -39310,13 +39475,14 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("h2", [_vm._v("TENANT Component")]),
-      _vm._v(" "),
-      _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "nav",
+      {
+        staticClass: "mt-3",
+        attrs: { "aria-label": "Page navigation example" }
+      },
+      [
         _c("ul", { staticClass: "pagination" }, [
           _c(
             "li",
@@ -39373,30 +39539,44 @@ var render = function() {
             ]
           )
         ])
-      ]),
+      ]
+    ),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-hover" }, [
+      _vm._m(0),
       _vm._v(" "),
-      _vm._l(_vm.tenants, function(tenant) {
-        return _c(
-          "div",
-          { key: tenant.id, staticClass: "card card-body mb-2" },
-          [
-            _c("h3", [_vm._v("Tenant ID: " + _vm._s(tenant.id))]),
-            _vm._v(" "),
-            _c("p", [_vm._v("Tenant Role ID: " + _vm._s(tenant.role_id))]),
-            _vm._v(" "),
-            _c("p", [_vm._v("Tenant Name: " + _vm._s(tenant.name))]),
-            _vm._v(" "),
-            _c("p", [_vm._v("Tenant Email: " + _vm._s(tenant.email))]),
-            _vm._v(" "),
-            _c("hr")
-          ]
-        )
-      })
-    ],
-    2
-  )
+      _c(
+        "tbody",
+        _vm._l(_vm.tenants, function(tenant) {
+          return _c("tr", { key: tenant.id, staticClass: "text-center" }, [
+            _c("th", { attrs: { scope: "row" } }, [_vm._v(_vm._s(tenant.id))]),
+            _c("td", [_vm._v(_vm._s(tenant.role_id))]),
+            _c("td", [_vm._v("24")]),
+            _c("td", [_vm._v(_vm._s(tenant.name))]),
+            _c("td", [_vm._v(_vm._s(tenant.email))])
+          ])
+        }),
+        0
+      )
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "text-center" }, [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("ID")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Role ID")]),
+        _c("th", [_vm._v("Property ID")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Email")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

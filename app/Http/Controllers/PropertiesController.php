@@ -29,31 +29,33 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {
-        // Handle File Upload
-        if ($request->hasFile('property_image')) {
-            // Get filename with the extension
-            $filenameWithExt = $request->file('property_image')->getClientOriginalName();
-            // Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just extension
-            $extension = $request->file('property_image')->getClientOriginalExtension();
-            // Filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            return $filename;
-            // Upload Image
-            $path = $request->file('property_image')->storeAs('public/property_images', $fileNameToStore); 
-        } else {
-            $fileNameToStore = 'noimage.jpg';
-        }
+
+        // // Handle File Upload
+        // if ($request->hasFile('image')) {
+        //     // Get filename with the extension
+        //     $filenameWithExt = $request->file('image')->getClientOriginalName();
+        //     // Get just filename
+        //     $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        //     // Get just extension
+        //     $extension = $request->file('image')->getClientOriginalExtension();
+        //     // Filename to store
+        //     $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        //     // Upload Image
+        //     $path = $request->file('image')->storeAs('public/property_images', $fileNameToStore); 
+        // } else {
+        //     // $fileNameToStore = 'noimage.jpg';
+        //     return $request->all();
+        // }
 
         // If method is put find article by property_id else make new Property
         $property = $request->isMethod('put') ? Property::findOrFail($request->property_id) : new Property;
 
-        $property->id = $request->input('property_id');
-        $property->owner_id = $request->input('owner_id');
-        $property->manager_id = $request->input('manager_id');
-        $property->address = $request->input('address');
-        $property->property_image = $fileNameToStore;
+        $property->id = $request->property_id;
+        $property->owner_id = $request->owner_id;
+        $property->manager_id = $request->manager_id;
+        $property->address = $request->address;
+        // $property->image = $fileNameToStore;
+        $property->image = $request->image;
 
         if ($property->save()) {
             return new PropertyResource($property);

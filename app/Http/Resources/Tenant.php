@@ -19,7 +19,7 @@ class Tenant extends JsonResource
         // return parent::toArray($request);
 
         // Role this Tenant belongs to
-        $role = Role::find($this->role_id);
+        $role = Role::findOrFail($this->role_id);
         // User this Tenant belongs to
         $user = User::findOrFail($role->user_id);
         

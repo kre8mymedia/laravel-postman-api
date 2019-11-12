@@ -1,9 +1,8 @@
 <template>
    	<div class="container">
-     	<h2>TENANT Component</h2>
 
 		<!-- PAGINATION -->
-        <nav aria-label="Page navigation example">
+        <nav class="mt-3" aria-label="Page navigation example">
             <ul class="pagination">
                 <li v-bind:class="[{ disabled: !pagination.prev_page_url }]" class="page-item">
                     <a @click="fetchTenants(pagination.prev_page_url)" class="page-link">Previous</a>
@@ -16,15 +15,20 @@
         </nav>
         <!-- END PAGINATION -->
 
-        <!-- CARDS -->
-        <div class="card card-body mb-2" v-for="tenant in tenants" v-bind:key="tenant.id">
-            <h3>Tenant ID: {{ tenant.id }}</h3>
-            <p>Tenant Role ID: {{ tenant.role_id }}</p>
-            <p>Tenant Name: {{ tenant.name }}</p>
-            <p>Tenant Email: {{ tenant.email }}</p>
-            <hr>
-        </div>
-        <!-- END CARDS -->
+        <!-- MANAGERS TABLE -->
+        <table class="table table-hover">
+            <thead>
+                <tr class='text-center'>
+                    <th scope="col">ID</th><th scope="col">Role ID</th><th>Property ID</th><th scope="col">Name</th><th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="tenant in tenants" v-bind:key="tenant.id" class='text-center'>
+                    <th scope="row">{{ tenant.id }}</th><td>{{ tenant.role_id }}</td><td>24</td><td>{{ tenant.name }}</td><td>{{ tenant.email }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- END MANAGERS TABLE -->
    </div>
 </template>
 
